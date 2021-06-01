@@ -1,2 +1,3 @@
 # little-rust
-rust iron
+
+the path of conquering rust.
