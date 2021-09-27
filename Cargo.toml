@@ -9,6 +9,6 @@ repository = "https://github.com/AzusaChino/little-rust"
 
 [dependencies]
 toml = "0.5.8"
-json = "0.12.4"
 
 [dev-dependencies]
+json = "0.12.4"

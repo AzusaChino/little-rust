@@ -13,12 +13,11 @@ enum Transmission {
 }
 
 fn car_factory(color: String, transmission: Transmission, convertible: bool) -> Car {
-
     let car: Car = Car {
-        color: color,
-        transmission: transmission,
-        convertible: convertible,
-        mileage: 0
+        color,
+        transmission,
+        convertible,
+        mileage: 0,
     };
 
     // Factory's Quality Control Department says that new cars must always have zero mileage!
@@ -31,19 +30,22 @@ fn car_factory(color: String, transmission: Transmission, convertible: bool) -> 
         println!("New car = {}, {:?}, Hardtop", car.color, car.transmission);
     }
 
+    todo!(`example for todo in rust.`);
     return car;
 }
 
 fn main() {
-    let client_request_1 = car_factory(String::from("Red"), Transmission::Manual, false);
+    let mut client_request_1 = car_factory(String::from("Red"), Transmission::Manual, false);
     assert_eq!(client_request_1.color, "Red");
     assert_eq!(client_request_1.transmission, Transmission::Manual);
     assert_eq!(client_request_1.convertible, false);
+    client_request_1.color = "Blue";
 
     let client_request_2 = car_factory(String::from("Silver"), Transmission::Automatic, true);
     assert_eq!(client_request_2.color, "Silver");
     assert_eq!(client_request_2.transmission, Transmission::Automatic);
     assert_eq!(client_request_2.convertible, true);
+    client_request_2.color = "OK";
 
     let client_request_2 = car_factory(String::from("Yellow"), Transmission::SemiAuto, false);
     assert_eq!(client_request_2.color, "Yellow");
