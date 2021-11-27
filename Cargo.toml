@@ -1,5 +1,5 @@
 [package]
-name = "little_rust"
+name = "little-rust"
 version = "0.0.1"
 authors = ["azusachino <azusachino@yahoo.com>"]
 edition = "2018"
