@@ -2,13 +2,18 @@
 name = "little-rust"
 version = "0.0.1"
 authors = ["azusachino <azusachino@yahoo.com>"]
-edition = "2018"
+edition = "2021"
 readme = "README.md"
 license-file = "LICENSE"
 repository = "https://github.com/AzusaChino/little-rust"
 
 [dependencies]
+argh = "0.1.6"
 toml = "0.5.8"
+
+[[bin]]
+name = "littlt-rust"
+path = "src/main.rs"
 
 [dev-dependencies]
 json = "0.12.4"
