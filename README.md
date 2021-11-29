@@ -16,4 +16,5 @@ Build something with rust.
 
 ## Notes
 
-1. To fix `edition 2021` problem, run `rustup update`
+1. To fix `edition 2021` problem, run `rustup update`.
+2. use cargo global `config` to enable proxy.

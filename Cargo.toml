@@ -10,6 +10,7 @@ repository = "https://github.com/AzusaChino/little-rust"
 [dependencies]
 argh = "0.1.6"
 toml = "0.5.8"
+rand = "0.8.1"
 
 [[bin]]
 name = "littlt-rust"
