@@ -6,8 +6,8 @@ the path of conquering rust.
 
 ## Main Content
 
-1. learn from microsoft [path](https://docs.microsoft.com/en-us/learn/paths/rust-first-steps/)
-2. Practices with rustlings
+1. Learn from microsoft [path](https://docs.microsoft.com/en-us/learn/paths/rust-first-steps/)
+2. Following the book `<The Rust Programming Language>`
 3. Other practical example codes
 
 ## Objective
