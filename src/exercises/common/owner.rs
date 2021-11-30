@@ -1,3 +1,6 @@
+// At any given time, you can have either one mutable reference or any number of immutable references.
+// References must always be valid.
+
 use std::mem::replace;
 
 // Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector.
@@ -101,7 +104,20 @@ fn __mai() {
 
     let (s4, l) = calculate_length(_s3);
 
-    println!("{}, {}", s4, l)
+    println!("{}, {}", s4, l);
+    let l_ = calculate_length_ref(&s4);
+    println!("{}", l_);
+
+    // unique ptr
+    let mut ss = String::from("Hello");
+    change(&mut ss);
+
+    let mut ms = String::from("hello");
+
+    {
+        let _r1 = &mut ms;
+    } // out of scope, _r1 die
+    let _r2 = &mut ms;
 }
 
 fn gives_ownership() -> String {
@@ -116,4 +132,92 @@ fn takes_and_give_back(a_string: String) -> String {
 fn calculate_length(s: String) -> (String, usize) {
     let l = s.len();
     (s, l)
+}
+
+// ref with read access
+fn calculate_length_ref(s: &String) -> usize {
+    s.len()
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", World")
+}
+
+// mutable, immutable references cannot exist at once
+fn im_mu() {
+    let mut s = String::from("hello");
+
+    let r1 = &s; // no problem
+    let r2 = &s; // no problem
+    let r3 = &mut s; // BIG PROBLEM
+
+    println!("{}, {}, and {}", r1, r2, r3);
+}
+
+// a reference’s scope starts from where it is introduced and continues through the last time that reference is used.
+fn im_after() {
+    let mut s = String::from("hello");
+
+    let r1 = &s; // no problem
+    let r2 = &s; // no problem
+    println!("{} and {}", r1, r2);
+    // variables r1 and r2 will not be used after this point
+
+    let r3 = &mut s; // no problem
+    println!("{}", r3);
+}
+
+fn dangle() -> &String {
+    let s = String::from("abc");
+    &s
+}
+
+// ************************ slice *************************************
+
+fn init() {
+    let mut s = String::from("Hello World");
+    let _word = first_word(&s);
+    s.clear();
+
+    // string slice
+    let ss = String::from("Hello World");
+    let _hello = &ss[0..5];
+    let _world = &ss[6..11];
+
+    let _slice = &ss[..];
+    let _slice = &ss[0..ss.len()];
+}
+
+fn sync_word() {
+    let mut s = String::from("hello world");
+
+    // immutable borrow
+    let word = first_word_sync(&s);
+
+    // mutable borrow
+    s.clear(); // error!
+
+    println!("the first word is: {}", word);
+}
+
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+    s.len()
+}
+
+fn first_word_sync(s: &String) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
 }
