@@ -1,3 +1,7 @@
+pub mod hosting {
+    pub fn add_to_wait_list() {}
+}
+
 fn takes_ownership(some_string: String) {
     println!("{}", some_string);
 }

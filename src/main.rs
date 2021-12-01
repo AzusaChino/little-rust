@@ -4,6 +4,10 @@ use std::process::{Command, Stdio};
 
 use crate::exercise::{Exercise, ExerciseList};
 
+//
+pub mod exercises;
+pub use self::exercises::pkg::runner::echo;
+
 #[macro_use]
 mod ui;
 mod demo;
@@ -35,7 +39,9 @@ enum Subcommands {
 fn main() {
     let args: Args = argh::from_env();
     if args.version {
-        println!("v{}", VERSION);
+        let mut s = String::from("v");
+        s.push_str(VERSION);
+        echo(s);
         std::process::exit(0);
     }
     if args.nested.is_none() {
