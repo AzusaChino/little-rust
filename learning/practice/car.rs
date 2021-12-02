@@ -2,7 +2,7 @@ struct Car {
     color: String,
     motor: Transmission,
     roof: bool,
-    age: (Age, u32)
+    age: (Age, u32),
 }
 
 #[derive(PartialEq, Debug)]
@@ -15,18 +15,18 @@ enum Transmission {
 #[derive(PartialEq, Debug)]
 enum Age {
     New,
-    Used
+    Used,
 }
 
 enum Color {
     Blue,
     Green,
     Red,
-    Silver
+    Silver,
 }
 
 fn car_quality(miles: u32) -> (Age, u32) {
-    let quality: (Age, u32) = Age::New, miles;
+    let quality: (Age, u32) = (Age::New, miles);
     return quality;
 }
 
@@ -53,19 +53,19 @@ fn car_factory(color: String, motor: Transmission, roof: bool, miles: u32) -> Ca
 }
 
 fn main() {
-    let mut client_request_1 = car_factory(Color::Red.to_string(), Transmission::Manual, false);
+    let mut client_request_1 = car_factory(Color::Red.to_string(), Transmission::Manual, false, 100);
     assert_eq!(client_request_1.color, "Red");
     assert_eq!(client_request_1.transmission, Transmission::Manual);
     assert_eq!(client_request_1.convertible, false);
     client_request_1.color = "Blue";
 
-    let client_request_2 = car_factory(String::from("Silver"), Transmission::Automatic, true);
+    let client_request_2 = car_factory(String::from("Silver"), Transmission::Automatic, true, 200);
     assert_eq!(client_request_2.color, "Silver");
     assert_eq!(client_request_2.transmission, Transmission::Automatic);
     assert_eq!(client_request_2.convertible, true);
     client_request_2.color = "OK";
 
-    let client_request_2 = car_factory(String::from("Yellow"), Transmission::SemiAuto, false);
+    let client_request_2 = car_factory(String::from("Yellow"), Transmission::SemiAuto, false, 100);
     assert_eq!(client_request_2.color, "Yellow");
     assert_eq!(client_request_2.transmission, Transmission::SemiAuto);
     assert_eq!(client_request_2.convertible, false);

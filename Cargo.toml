@@ -1,6 +1,6 @@
 [package]
-name = "little-rust"
-version = "0.0.1"
+name = "little_rust"
+version = "0.0.2"
 authors = ["azusachino <azusachino@yahoo.com>"]
 edition = "2021"
 readme = "README.md"
@@ -13,7 +13,7 @@ toml = "0.5.8"
 rand = "0.8.1"
 
 [[bin]]
-name = "littlt-rust"
+name = "littlt_rust"
 path = "src/main.rs"
 
 [dev-dependencies]

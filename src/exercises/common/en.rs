@@ -71,7 +71,9 @@ fn value_in_cents(coin: &Coin) -> u8 {
         Coin::Penny => 1,
         Coin::Nickel => 5,
         Coin::Dime => 10,
-        _ => {}
+        _ => {
+            return 100;
+        }
     }
 }
 
@@ -102,6 +104,7 @@ fn dice(dice: u8) {
 
 fn if_constitute() {
     let mut count = 0;
+    let coin = Coin::Dime;
     match coin {
         Coin::Quarter(state) => println!("State quarter from {:?}!", state),
         _ => count += 1,

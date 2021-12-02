@@ -27,9 +27,9 @@ fn car_factory(color: String, transmission: Transmission, convertible: bool) -> 
     // - Bind first three fields to value of corresponding input argument
     // - Set mileage to 0
     let car = Car {
-        color: color,
-        transmission: transmission,
-        convertible: convertible,
+        color,
+        transmission,
+        convertible,
         mileage: 0
     };
 

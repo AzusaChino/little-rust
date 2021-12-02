@@ -27,9 +27,9 @@ fn test_move() {
     let _name = p.name;
     //   ------ value partially moved here
     println!("{}{}", _name, p.email);
-    println!("{:?}", p);
+    // println!("{:?}", p);
 
-    let __name = p.name.clone();
+    // let __name = p.name.clone();
 }
 
 struct Buffer {
@@ -56,7 +56,7 @@ fn function_area() {
         let x = 10;
         r = &x;
     }
-    println!("{}", r)
+    // println!("{}", r)
     //   |
     // 52 |         r = &x;
     //    |             ^^ borrowed value does not live long enough
@@ -149,9 +149,9 @@ fn im_mu() {
 
     let r1 = &s; // no problem
     let r2 = &s; // no problem
-    let r3 = &mut s; // BIG PROBLEM
+    // let _r3 = &mut s; // BIG PROBLEM
 
-    println!("{}, {}, and {}", r1, r2, r3);
+    println!("{}, {}", r1, r2);
 }
 
 // a reference’s scope starts from where it is introduced and continues through the last time that reference is used.
@@ -167,10 +167,11 @@ fn im_after() {
     println!("{}", r3);
 }
 
-fn dangle() -> &String {
-    let s = String::from("abc");
-    &s
-}
+// cannot compile
+// fn dangle() -> &String {
+//     let s = String::from("abc");
+//     &s
+// }
 
 // ************************ slice *************************************
 
@@ -195,7 +196,7 @@ fn sync_word() {
     let word = first_word_sync(&s);
 
     // mutable borrow
-    s.clear(); // error!
+    // s.clear(); // error!
 
     println!("the first word is: {}", word);
 }

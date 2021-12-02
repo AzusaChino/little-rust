@@ -16,16 +16,16 @@ fn takes_and_gives_back(mut a_string: String) -> String {
     return a_string;
 }
 
-enum Sex {
+pub enum Sex {
     MALE,
     FEMALE,
 }
 
-struct Person {
-    name: String,
-    age: i8,
-    sex: Sex,
-    email: String,
+pub struct Person {
+    pub name: String,
+    pub age: i8,
+    pub sex: Sex,
+    pub email: String,
 }
 
 fn new_person() -> Person {
@@ -51,7 +51,7 @@ mod foo {
     }
 }
 
-pub fn main() {
+fn main() {
     let s1 = gives_ownership();
     takes_ownership(s1);
 

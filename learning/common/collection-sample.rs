@@ -1,7 +1,12 @@
 #[derive(PartialEq, Debug)]
 // Declare Car struct to describe vehicle with four named fields
 // Corrected code: "mileage" u32 field removed, "age" tuple field added
-struct Car { color: String, motor: Transmission, roof: bool, age: (String, u32) }
+struct Car {
+    color: String,
+    motor: Transmission,
+    roof: bool,
+    age: (String, u32),
+}
 
 #[derive(PartialEq, Debug)]
 // Declare enum for Car transmission type
@@ -11,7 +16,7 @@ enum Transmission { Manual, SemiAuto, Automatic }
 // - miles (u32)
 // Create a tuple for the car quality with the age ("New" or "Used") and miles
 // Return a tuple with the arrow `->` syntax
-fn car_quality (miles: u32) -> (String, u32) {
+fn car_quality(miles: u32) -> (String, u32) {
 
     // Declare and initialize the return tuple value
     // For a new car, set the miles to 0
@@ -26,7 +31,7 @@ fn car_quality (miles: u32) -> (String, u32) {
     }
 
     // Corrected code: Return the completed tuple, no semicolon needed
-    return quality
+    return quality;
 }
 
 // Build a new "Car" using the values of four input arguments
@@ -43,14 +48,14 @@ fn car_factory(color: String, motor: Transmission, roof: bool, miles: u32) -> Ca
     // Corrected code: "mileage" is replaced with "age"
     // Corrected code: - Bind "age" to tuple returned from car_quality(miles)
     let car = Car {
-        color: color,
-        motor: motor,
-        roof: roof,
-        age: car_quality(miles)
+        color,
+        motor,
+        roof,
+        age: car_quality(miles),
     };
 
     // Return new instance of "Car" struct, no semicolon needed
-    return car
+    return car;
 }
 
 fn main() {
@@ -60,7 +65,7 @@ fn main() {
 
     // Initialize variables
     let (mut index, mut order) = (1, 1);
-    
+
     // Declare the car type and initial values
     // Corrected code: Declare "car" as mutable "Car" struct
     // Corrected code: Declare "engine" as mutable "Transmission" enum
@@ -74,16 +79,16 @@ fn main() {
     // Corrected code: loop a "while" to fulfill orders for 11 cars
     // Use "order" variable, initialized to 0, loop from 0 through 10 
     while order <= 11 {
-        
+
         // Set car transmission type
         engine = Transmission::Manual;
 
         // Order the cars, New are even numbers, Used are odd numbers
         // Corrected code: Index into `colors` array, vary color for the orders
         if index % 2 != 0 {
-            car = car_factory(colors[index-1].to_string(), engine, roof, miles);
-        } else { 
-            car = car_factory(colors[index-1].to_string(), engine, roof, 0);
+            car = car_factory(colors[index - 1].to_string(), engine, roof, miles);
+        } else {
+            car = car_factory(colors[index - 1].to_string(), engine, roof, 0);
         }
 
         // Display car order details 
@@ -93,7 +98,7 @@ fn main() {
         // Corrected code: Increment "order" by 1, and "miles" by 1,000
         order = order + 1;
         miles = miles + 1000;
-        
+
         // Adjust the index for the car details
         // Order 11 cars, use index range of 0 -- 4, then repeat from 0
         if index < 4 {

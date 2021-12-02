@@ -26,7 +26,7 @@ fn sample() {
                 break;
             }
             if count == 2 {
-                break counting_up;
+                break 'counting_up;
             }
             remaining -= 1;
         }
@@ -35,6 +35,7 @@ fn sample() {
     }
     println!("End count = {}", count);
 
+    let mut counter = 1;
     let result = loop {
         counter += 1;
 

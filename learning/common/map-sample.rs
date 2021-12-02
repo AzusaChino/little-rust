@@ -1,6 +1,11 @@
 #[derive(PartialEq, Debug)]
 // Declare Car struct to describe vehicle with four named fields
-struct Car { color: String, motor: Transmission, roof: bool, age: (String, u32) }
+struct Car {
+    color: String,
+    motor: Transmission,
+    roof: bool,
+    age: (String, u32),
+}
 
 #[derive(PartialEq, Debug)]
 // Declare enum for Car transmission type
@@ -10,7 +15,7 @@ enum Transmission { Manual, SemiAuto, Automatic }
 // - miles (u32)
 // Create a tuple for the car quality with the age ("New" or "Used") and miles
 // Return a tuple with the arrow `->` syntax
-fn car_quality (miles: u32) -> (String, u32) {
+fn car_quality(miles: u32) -> (String, u32) {
 
     // Declare and initialize the return tuple value
     // For a new car, set the miles to 0
@@ -24,7 +29,7 @@ fn car_quality (miles: u32) -> (String, u32) {
     }
 
     // Return the completed tuple, no semicolon needed
-    return quality
+    return quality;
 }
 
 // Build a new "Car" using the values of four input arguments
@@ -40,14 +45,14 @@ fn car_factory(color: String, motor: Transmission, roof: bool, miles: u32) -> Ca
     // - Bind first three fields to values of input arguments
     // - Bind "age" to tuple returned from car_quality(miles)
     let car = Car {
-        color: color,
-        motor: motor,
-        roof: roof,
-        age: car_quality(miles)
+        color,
+        motor,
+        roof,
+        age: car_quality(miles),
     };
 
     // Return new instance of "Car" struct, no semicolon needed
-    return car
+    return car;
 }
 
 fn main() {
@@ -66,7 +71,7 @@ fn main() {
 
     // Initialize variables
     let (mut index, mut order) = (1, 1);
-    
+
     // Declare the car type and initial values
     let mut car: Car;
     let mut miles = 1000; // Start used cars with 1,000 miles
@@ -77,7 +82,7 @@ fn main() {
     // loop a "while" to fulfill orders for 11 cars
     // Use "order" variable, initialized to 0, loop from 0 through 10 
     while order <= 11 {
-        
+
         // Set car transmission type, make some roofs convertible
         //
         // Corrected code: Use conditional expression
@@ -112,12 +117,12 @@ fn main() {
         // ADD hash map functionality
         // Corrected code: Use ".to_string()" syntax for String keys
         if index % 2 != 0 {
-            car = car_factory(colors[index-1].to_string(), engine, roof, miles);
+            car = car_factory(colors[index - 1].to_string(), engine, roof, miles);
             // ADD <K, V> pair to hash map
             orders.insert("Used".to_string(), used_cars);
             used_cars = used_cars + 1;
-        } else { 
-            car = car_factory(colors[index-1].to_string(), engine, roof, 0);
+        } else {
+            car = car_factory(colors[index - 1].to_string(), engine, roof, 0);
             // ADD <K, V> pair to hash map
             orders.insert("New".to_string(), new_cars);
             new_cars = new_cars + 1;
@@ -129,20 +134,20 @@ fn main() {
         // Corrected code: car.roof = closed (true) or convertible (false)
         // Corrected code: car mileage = car.age.1, if miles > 0, then car is new
         if car.roof && car.age.1 > 0 {
-            println!("{}: {}, {:?}, Closed roof, {}, {} miles", order, car.age.0, car.motor, car.color, car.age.1); 
+            println!("{}: {}, {:?}, Closed roof, {}, {} miles", order, car.age.0, car.motor, car.color, car.age.1);
         } else if car.roof {
-            println!("{}: {}, {:?}, Closed roof, {}", order, car.age.0, car.motor, car.color); 
+            println!("{}: {}, {:?}, Closed roof, {}", order, car.age.0, car.motor, car.color);
         } else if car.age.1 > 0 {
-            println!("{}: {}, {:?}, Convertible, {}, {} miles", order, car.age.0, car.motor, car.color, car.age.1); 
+            println!("{}: {}, {:?}, Convertible, {}, {} miles", order, car.age.0, car.motor, car.color, car.age.1);
         } else {
-            println!("{}: {}, {:?}, Convertible, {}", order, car.age.0, car.motor, car.color); 
+            println!("{}: {}, {:?}, Convertible, {}", order, car.age.0, car.motor, car.color);
         }
 
         // Change values for next loop
         // Increment "order" by 1, and "miles" by 1,000
         order = order + 1;
         miles = miles + 1000;
-        
+
         // Adjust the index for the car details
         // Order 11 cars, use index range of 0 -- 4, then repeat from 0
         if index < 4 {

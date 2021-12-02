@@ -6,10 +6,18 @@
 // crate 代表引用当前文件同级的文件
 // super 代表当前文件的上一级目录
 
+pub use crate::client::Client;
+pub use crate::client::Connection;
+pub use crate::demo::Person;
+pub use crate::demo::Sex;
 // Bringing a module into scope with use
 pub use crate::front_of_house::hosting;
 
 pub mod exercises;
+pub mod demo;
+pub mod exercise;
+pub mod ui;
+pub mod client;
 
 mod front_of_house {
     pub mod hosting {

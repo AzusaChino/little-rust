@@ -1,6 +1,10 @@
-use std::fmt::{self, Display, Formatter};
+use std::cell::Cell;
+use std::fmt;
 use std::path::PathBuf;
 use std::process::{self, Command};
+use std::sync::{Arc, Mutex};
+
+use crate::{Client, Connection};
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
@@ -16,23 +20,32 @@ fn temp_file() -> String {
     format!("./temp_{}_{}", process::id(), thread_id)
 }
 
-#[derive(Deserialize, Copy, Clone, Debug)]
-#[serde(rename_all = "lowercase")]
+#[derive(Copy, Clone, Debug)]
 pub enum Mode {
     Compile,
     Test,
     Clippy,
 }
 
-#[derive(Deserialize)]
 pub struct ExerciseList {
     pub exercises: Vec<Exercise>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Debug)]
 pub struct Exercise {
     pub name: String,
     pub path: PathBuf,
     pub mode: Mode,
     pub hint: String,
+}
+
+fn test_client() -> Client {
+    Client {
+        conn: Arc::new(Mutex::new(Connection {})),
+        txn: Cell::new(None),
+    }
+}
+
+pub fn do_me_a_favor() {
+    println!("do me a favor")
 }

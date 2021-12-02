@@ -2,17 +2,17 @@ use std::fs;
 use std::path::Path;
 use std::process::{Command, Stdio};
 
-use crate::exercise::{Exercise, ExerciseList};
+use little_rust::exercise::ExerciseList;
 
-//
-pub mod exercises;
+pub use crate::abc::ab;
+
 pub use self::exercises::pkg::runner::echo;
 
-#[macro_use]
-mod ui;
-mod demo;
+pub mod abc {
+    pub fn ab() {}
+}
 
-mod exercise;
+pub mod exercises;
 
 const VERSION: &str = "4.6.0";
 
@@ -41,7 +41,8 @@ fn main() {
     if args.version {
         let mut s = String::from("v");
         s.push_str(VERSION);
-        echo(s);
+        echo(&s[..]);
+        echo(&*s);
         std::process::exit(0);
     }
     if args.nested.is_none() {
