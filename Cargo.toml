@@ -18,3 +18,15 @@ path = "src/main.rs"
 
 [dev-dependencies]
 json = "0.12.4"
+
+[profile.dev]
+# The opt-level setting controls the number of optimizations Rust will apply to your code
+opt-level = 0
+
+[profile.release]
+opt-level = 3
+
+[workspace]
+members = [
+    "minigrep"
+]
