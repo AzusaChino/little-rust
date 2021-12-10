@@ -1,4 +1,3 @@
-use std::borrow::{Borrow, BorrowMut};
 use std::fmt::Debug;
 use std::fmt::Display;
 
@@ -64,23 +63,23 @@ fn some_function<T, U>(_t: &T, _u: &U) -> i32 where T: Display + Clone, U: Clone
     0
 }
 
-fn returns_summary(switch: bool) -> impl Summary {
-    if switch {
-        NewsArticle {
-            headline: "".to_string(),
-            location: "".to_string(),
-            author: "".to_string(),
-            content: "".to_string(),
-        }
-    } else {
-        Tweet {
-            username: "".to_string(),
-            content: "".to_string(),
-            reply: false,
-            retweet: false,
-        }
-    }
-}
+// fn returns_summary(switch: bool) -> impl Summary {
+//     if switch {
+//         NewsArticle {
+//             headline: "".to_string(),
+//             location: "".to_string(),
+//             author: "".to_string(),
+//             content: "".to_string(),
+//         }
+//     } else {
+//         Tweet {
+//             username: "".to_string(),
+//             content: "".to_string(),
+//             reply: false,
+//             retweet: false,
+//         }
+//     }
+// }
 
 // Using Trait Bounds to Conditionally Implement Methods
 struct Pair<T> {

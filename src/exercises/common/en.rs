@@ -116,4 +116,6 @@ fn if_constitute() {
     } else {
         count += 1;
     }
+
+    println!("{}", count);
 }

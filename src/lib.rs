@@ -1,6 +1,8 @@
 #![warn(clippy::all)]
 #![allow(clippy::new_without_default)]
 #![allow(clippy::unneeded_field_pattern)]
+// 允许 unused code
+#![allow(dead_code)]
 
 // mod 引入与当前文件同级的文件夹下的文件
 // crate 代表引用当前文件同级的文件

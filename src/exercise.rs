@@ -1,7 +1,6 @@
 use std::cell::Cell;
-use std::fmt;
 use std::path::PathBuf;
-use std::process::{self, Command};
+use std::process::{self};
 use std::sync::{Arc, Mutex};
 
 use crate::{Client, Connection};

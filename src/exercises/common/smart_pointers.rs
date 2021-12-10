@@ -3,7 +3,6 @@
 // Ref<T> and RefMut<T>, accessed through RefCell<T>, a type that enforces the borrowing rules at runtime instead of compile time
 
 use std::ops::Deref;
-use std::rc::Rc;
 
 fn main() {
     // store an i32 value on the heap

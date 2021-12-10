@@ -1,6 +1,3 @@
-use std::sync::Arc;
-use std::thread;
-use std::time::Duration;
 
 pub struct JobStatus {
     jobs_completed: u32,

@@ -9,5 +9,5 @@ RwLock：用于全局变量的初始化。提供了一个相互排斥机制，�
  **/
 
 pub mod threads_test;
-pub mod mu;
 mod atomic;
+mod index;
