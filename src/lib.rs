@@ -20,6 +20,7 @@ pub mod demo;
 pub mod exercise;
 pub mod ui;
 pub mod client;
+pub mod thread_pool;
 
 /// Adds one to the number given.
 ///

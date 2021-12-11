@@ -1,6 +1,8 @@
 use std::{env, fs};
 use std::error::Error;
 
+pub mod hello;
+
 pub struct Config {
     pub query: String,
     pub filename: String,
@@ -29,12 +31,12 @@ impl Config {
 
         let qry = match args.next() {
             None => Err("no query string"),
-            Some(arg) => { arg }
+            Some(arg) => Ok(arg)
         };
 
         let filename = match args.next() {
             Some(arg) => arg,
-            None => Err("no filename")
+            None => panic!("no filename")
         };
 
         let case_sensitive = env::var("CASE_SENSITIVE").is_ok();

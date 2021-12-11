@@ -2,8 +2,13 @@ use std::{env, fs, process};
 use std::error::Error;
 
 use minigrep::Config;
+use minigrep::hello::srv;
 
 fn main() {
+    srv();
+}
+
+fn run() {
     let args: Vec<String> = env::args().collect();
     // cargo run needle haystack
     // ["target/debug/minigrep", "needle", "haystack"]
