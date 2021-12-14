@@ -25,3 +25,21 @@ Build something with rust.
 2. Crates: A tree of modules that produces a library or executable
 3. Modules and use: Let you control the organization, scope, and privacy of paths
 4. Paths: A way of naming an item, such as struct, function, or module
+
+## cn mirror
+
+install with mirror `curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh | sh`
+
+```config
+[source.crates-io]
+replace-with = 'rsproxy'
+
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+
+[net]
+git-fetch-with-cli = true
+```

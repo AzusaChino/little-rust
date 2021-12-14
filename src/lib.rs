@@ -53,6 +53,32 @@ mod front_of_house {
     }
 }
 
+pub struct Button;
+
+pub mod a {
+    use super::Button;
+
+    pub struct AdButton {
+        pub b: Button,
+    }
+}
+
+pub mod b {
+    use crate::a::AdButton;
+    use crate::Button;
+
+    use self::c::CdButton;
+
+    fn bd() {
+        let _a = AdButton { b: Button };
+        let _c = CdButton;
+    }
+
+    pub mod c {
+        pub struct CdButton;
+    }
+}
+
 fn serve_order() {}
 
 mod back_of_house {

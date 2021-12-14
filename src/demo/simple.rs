@@ -8,7 +8,7 @@ fn takes_ownership(some_string: String) {
 
 fn gives_ownership() -> String {
     let some_string = String::from("hello");
-    return some_string;
+    some_string
 }
 
 fn takes_and_gives_back(mut a_string: String) -> String {
@@ -70,4 +70,25 @@ fn main() {
 
     let f = foo::Foo::new("hello");
     println!("{:?}", f)
+}
+
+mod bm {
+    fn borrow(s: &String) {
+        println!("{}", s);
+    }
+
+    fn borrow_mut(s: &mut String) {
+        s.push_str(" zzz");
+        println!("{}", s)
+    }
+
+    fn main() {
+        let s = String::from("123");
+        borrow(&s);
+        borrow(&s);
+
+        let mut z = String::from("zzz");
+        borrow_mut(&mut z);
+
+    }
 }

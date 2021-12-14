@@ -222,3 +222,17 @@ fn first_word_sync(s: &String) -> &str {
 
     &s[..]
 }
+
+mod cl {
+    #[cfg(test)]
+    mod tt {
+        #[test]
+        fn t1() {
+            let m = 1.0;
+            let c = 2.0;
+            // m, c are using as ref
+            let line = |x| m * x + c;
+            println!("{} {}", line(0.0), line(1.0));
+        }
+    }
+}

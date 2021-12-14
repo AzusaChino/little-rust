@@ -1,7 +1,19 @@
 [http]
-proxy = "127.0.0.1:20809"
+# proxy = "127.0.0.1:20809"
 timeout = 30        # Timeout for each HTTP request, in seconds
-#cainfo = "cert.pem" # Path to Certificate Authority (CA) bundle (optional)
+# cainfo = "cert.pem" # Path to Certificate Authority (CA) bundle (optional)
 check-revoke = false # Indicates whether SSL certs are checked for revocation
-#low-speed-limit = 5 # Lower threshold for bytes/sec (10 = default, 0 = disabled)
+# low-speed-limit = 5 # Lower threshold for bytes/sec (10 = default, 0 = disabled)
 multiplexing = false # whether or not to use HTTP/2 multiplexing where possible
+
+[source.crates-io]
+replace-with = 'rsproxy'
+
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+
+[net]
+git-fetch-with-cli = true
