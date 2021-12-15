@@ -346,3 +346,63 @@ mod reference_cycle {
         );
     }
 }
+
+mod sp {
+    use std::cell::RefCell;
+    use std::rc::{Rc, Weak};
+
+    fn t_box() {
+        // move value from stack to heap
+        let val: u8 = 5;
+        let _b: Box<u8> = Box::new(val);
+
+        // move value from heap to stack by dereference
+        let boxed: Box<u8> = Box::new(5);
+        let _val: u8 = *boxed;
+    }
+
+    struct Owner {
+        name: String,
+        gadgets: RefCell<Vec<Weak<Gadget>>>,
+    }
+
+    struct Gadget {
+        id: i32,
+        owner: Rc<Owner>,
+    }
+
+    fn t_rc() {
+        let gadget_owner: Rc<Owner> = Rc::new(
+            Owner {
+                name: "Gadget Man".to_string(),
+                gadgets: RefCell::new(vec![]),
+            }
+        );
+
+        let g1 = Rc::new(
+            Gadget {
+                id: 1,
+                owner: Rc::clone(&gadget_owner),
+            }
+        );
+        let g2 = Rc::new(
+            Gadget {
+                id: 2,
+                owner: gadget_owner.clone(),
+            }
+        );
+
+        {
+            let mut gadgets = gadget_owner.gadgets.borrow_mut();
+            gadgets.push(Rc::downgrade(&g1));
+            gadgets.push(Rc::downgrade(&g2));
+        }
+
+        for gadget_weak in gadget_owner.gadgets.borrow().iter() {
+            // `Weak` pointers can't guarantee the allocation still exists,
+            // we need to call `upgrade`, which returns an `Option<Rc<Gadget>>`.
+            let g = gadget_weak.upgrade().unwrap();
+            println!("Gadget {} owned by {}", g.id, g.owner.name);
+        }
+    }
+}

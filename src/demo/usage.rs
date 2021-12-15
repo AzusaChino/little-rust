@@ -56,7 +56,7 @@ mod cl {
     }
 
     fn do_twice<F>(mut func: F)
-        where F: FnMut() {
+        where F: FnMut<()> {
         func();
     }
 }
