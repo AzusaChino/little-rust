@@ -1,8 +1,8 @@
-struct Car {
-    color: String,
-    motor: Transmission,
-    roof: bool,
-    age: (Age, u32),
+pub struct Car {
+    pub(crate) color: String,
+    pub motor: Transmission,
+    pub roof: bool,
+    pub age: (Age, u32),
 }
 
 #[derive(PartialEq, Debug)]
@@ -13,7 +13,7 @@ enum Transmission {
 }
 
 #[derive(PartialEq, Debug)]
-enum Age {
+pub enum Age {
     New,
     Used,
 }
@@ -48,7 +48,6 @@ fn car_factory(color: String, motor: Transmission, roof: bool, miles: u32) -> Ca
         println!("New car = {}, {:?}, Hardtop", car.color, car.transmission);
     }
 
-    todo!(`example for todo in rust.`);
     return car;
 }
 
@@ -57,13 +56,13 @@ fn main() {
     assert_eq!(client_request_1.color, "Red");
     assert_eq!(client_request_1.transmission, Transmission::Manual);
     assert_eq!(client_request_1.convertible, false);
-    client_request_1.color = "Blue";
+    client_request_1.color = "Blue".parse().unwrap();
 
     let client_request_2 = car_factory(String::from("Silver"), Transmission::Automatic, true, 200);
     assert_eq!(client_request_2.color, "Silver");
     assert_eq!(client_request_2.transmission, Transmission::Automatic);
     assert_eq!(client_request_2.convertible, true);
-    client_request_2.color = "OK";
+    // client_request_2.color = "OK".parse().unwrap();
 
     let client_request_2 = car_factory(String::from("Yellow"), Transmission::SemiAuto, false, 100);
     assert_eq!(client_request_2.color, "Yellow");

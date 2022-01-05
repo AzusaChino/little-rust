@@ -5,15 +5,18 @@ authors = ["azusachino <azusachino@yahoo.com>"]
 edition = "2021"
 readme = "README.md"
 license-file = "LICENSE"
-repository = "https://github.com/AzusaChino/little-rust"
+repository = "https://github.com/azusachino/little-rust"
 
 [dependencies]
+anyhow = "1.0.52"
 argh = "0.1.6"
+chrono = { version = "0.4", features = ["serde"] }
 toml = "0.5.8"
 rand = "0.8.1"
+tokio = { version = "1.15.0", features = ["full"] }
 
 [[bin]]
-name = "littlt_rust"
+name = "little_rust"
 path = "src/main.rs"
 
 [dev-dependencies]
@@ -28,5 +31,6 @@ opt-level = 3
 
 [workspace]
 members = [
-    "minigrep"
+    "minigrep",
+    "practice"
 ]

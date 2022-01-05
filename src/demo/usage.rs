@@ -50,13 +50,13 @@ mod cl {
             println!("{}", s);
         });
 
-        let _pp = |f: dyn Fn<()>| {
-            f();
-        };
+        // let _pp = |f: dyn Fn<()>| {
+        //     f();
+        // };
     }
 
-    fn do_twice<F>(mut func: F)
-        where F: FnMut<()> {
-        func();
-    }
+    // fn do_twice<F>(mut func: F)
+    //     where F: FnMut<()> {
+    //     func();
+    // }
 }

@@ -10,7 +10,7 @@ fn first() {
     println!("The number is {}.", a_number);
     println!("The boolean is {}.", a_boolean);
 
-    a_number = 13;
+    // a_number = 13;
     println!("{}", a_number);
 
     let mut b_number = 10;
