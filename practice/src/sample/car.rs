@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Car {
     pub color: String,
     pub motor: Transmission,

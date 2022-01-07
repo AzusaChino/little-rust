@@ -32,5 +32,6 @@ opt-level = 3
 [workspace]
 members = [
     "minigrep",
+    "miniredis",
     "practice"
 ]

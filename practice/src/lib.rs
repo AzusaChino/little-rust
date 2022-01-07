@@ -5,7 +5,6 @@ pub mod whatever;
 mod common;
 
 mod only_lib {
-    use std::any::Any;
 
     use crate::Age;
     use crate::Car;
@@ -23,6 +22,6 @@ mod only_lib {
     #[test]
     fn test_car_factory() {
         let _car = car_factory();
-        println!("{:?}", _car.type_id());
+        println!("{:?}", _car);
     }
 }
