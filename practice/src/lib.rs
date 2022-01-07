@@ -1,10 +1,15 @@
 pub use sample::{Age, Car};
 
 pub mod sample;
+pub mod whatever;
+mod common;
 
 mod only_lib {
+    use std::any::Any;
+
     use crate::Age;
     use crate::Car;
+    use crate::sample::Transmission;
 
     fn car_factory() -> Car {
         return Car {
@@ -13,5 +18,11 @@ mod only_lib {
             roof: false,
             age: (Age::New, 0),
         };
+    }
+
+    #[test]
+    fn test_car_factory() {
+        let _car = car_factory();
+        println!("{:?}", _car.type_id());
     }
 }

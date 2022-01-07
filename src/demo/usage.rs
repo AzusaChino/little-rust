@@ -50,13 +50,15 @@ mod cl {
             println!("{}", s);
         });
 
-        // let _pp = |f: dyn Fn<()>| {
+        // unknown memory size
+        // let _pp = |f: dyn Fn()| {
         //     f();
         // };
     }
 
-    // fn do_twice<F>(mut func: F)
-    //     where F: FnMut<()> {
-    //     func();
-    // }
+    fn do_twice<F>(mut func: F)
+        // prefered Fn(usize) -> (usize)
+        where F: FnMut() -> () {
+        func();
+    }
 }

@@ -1,10 +1,5 @@
 // only expose one struct
-pub use car::Car;
-pub use car::Age;
+pub use car::{Age, Car, Transmission};
 
 mod car;
-mod hello;
 mod col;
-mod mapping;
-mod func;
-
