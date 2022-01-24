@@ -7,7 +7,7 @@ fn use_as_lock() {
     let spin_lock = Arc::new(AtomicUsize::new(1));
     let spin_lock_clone = Arc::clone(&spin_lock);
 
-    let thread = thread::spawn(|| {
+    let thread = thread::spawn(move || {
         spin_lock_clone.store(0, Ordering::SeqCst);
     });
 
