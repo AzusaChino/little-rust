@@ -18,15 +18,18 @@ struct Closure<'a> {
     t: &'a String,
 }
 
-impl<'a> FnOnce<()> for Closure<'a> {
-    type Output = String;
+// impl<'a> FnOnce<()> for Closure<'a> {
+//     type Output = String;
 
-    fn call_once(self, args: ()) -> Self::Output {
-        self.s + self.t + args()
-    }
-}
+//     fn call_once(self, args: ()) -> Self::Output {
+//         self.s + self.t + args()
+//     }
+// }
 
-fn consume_with_relish<F>(func: F) where F: FnOnce() -> String {
+fn consume_with_relish<F>(func: F)
+where
+    F: FnOnce() -> String,
+{
     println!("Consumed: {}", func());
 }
 

@@ -9,9 +9,15 @@ edition = "2021"
 name = "toki"
 path = "src/bin/toki.rs"
 
+[[bin]]
+name = "nixs"
+path = "src/bin/nixs.rs"
+
 [dependencies]
-anyhow = "1.0.52"
+anyhow = "1.0.51"
 chrono = { version = "0.4", features = ["serde"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = { version = "1.15.0", features = ["full"] }
+nix = "0.23.1"
+libc = "0.2.112"

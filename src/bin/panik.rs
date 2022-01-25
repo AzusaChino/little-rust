@@ -15,15 +15,15 @@ fn main() {
     assert_eq!(None.unwrap_or("cat"), "cat");
 }
 
-fn test_diff_lifetime() {
-    let m = String::from("abracadabra");
-    let result;
-    {
-        let s = String::from("shazam");
-        result = longest_word(&m, &s);
-    }
-    println!("magic: {}", result)
-}
+// fn test_diff_lifetime() {
+//     let m = String::from("abracadabra");
+//     let result;
+//     {
+//         let s = String::from("shazam");
+//         result = longest_word(&m, &s);
+//     }
+//     println!("magic: {}", result)
+// }
 
 // declare generic lifetime inside angle brackets
 fn longest_word<'a>(x: &'a String, y: &'a String) -> &'a String {
@@ -34,7 +34,8 @@ fn longest_word<'a>(x: &'a String, y: &'a String) -> &'a String {
     }
 }
 
-fn longest_word_fail_compile(x: &String, y: &String) -> &String {
+// Cannot compile, must add lifecycle
+fn longest_word_fail_compile<'a>(x: &'a String, y: &'a String) -> &'a String {
     if x.len() > y.len() {
         x
     } else {

@@ -4,8 +4,8 @@ use tokio::sync::broadcast::Receiver;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (sender, mut receiver1) = broadcast::channel(16);
-    let mut re2 = sender.subscribe();
+    let (sender, receiver1) = broadcast::channel(16);
+    let re2 = sender.subscribe();
 
     test_receive(receiver1);
     test_receive(re2);
