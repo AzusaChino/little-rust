@@ -33,5 +33,6 @@ opt-level = 3
 members = [
     "minigrep",
     "miniredis",
-    "practice"
+    "practice",
+    "scylla"
 ]
