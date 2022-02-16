@@ -83,6 +83,62 @@ pub fn get_404_output_file(intput_404: &Option<String>) -> String {
         .replace(".md", ".html")
 }
 
+/// Copies all files of a directory to another one except the files
+/// with the extensions given in the `ext_blacklist` array
+pub fn copy_files_except_ext(
+    from: &Path,
+    to: &Path,
+    recursive: bool,
+    avoid_dir: Option<&PathBuf>,
+    ext_blacklist: &[&str],
+) -> Result<()> {
+    if from == to {
+        return Ok(());
+    }
+
+    for entry in fs::read_dir(from)? {
+        let entry = entry?;
+        let metadata = entry.path()
+            .metadata()
+            .with_context(|| format!("Failed to read {:?}", entry.path()))?;
+
+        if metadata.is_dir() && recursive {
+            if entry.path() == to.to_path_buf() {
+                continue;
+            }
+            if let Some(avoid) = avoid_dir {
+                if entry.path() == *avoid {
+                    continue;
+                }
+            }
+            if !to.join(entry.file_name()).exists() {
+                fs::create_dir(&to.join(entry.file_name()))?;
+            }
+
+            copy_files_except_ext(
+                &from.join(entry.file_name()),
+                &to.join(entry.file_name()),
+                true,
+                avoid_dir,
+                ext_blacklist,
+            )?;
+        } else if metadata.is_file() {
+            if let Some(ext) = entry.path().extension() {
+                if ext_blacklist.contains(&ext.to_str().unwrap()) {
+                    continue;
+                }
+            }
+            fs::copy(entry.path(),
+                     &to.join(entry
+                         .path()
+                         .file_name()
+                         .expect("a file should have a file name...")))?;
+        }
+    }
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use std::{fs, io::Result, path::Path};
