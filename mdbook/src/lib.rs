@@ -1,3 +1,4 @@
+pub mod cmd;
 pub mod utils;
 
 /// The current version of `mdbook`.
@@ -8,6 +9,6 @@ pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// The error types used through out this crate.
 pub mod errors {
-    pub(crate) use anyhow::{bail, Context, ensure};
+    pub(crate) use anyhow::{bail, ensure, Context};
     pub use anyhow::{Error, Result};
 }

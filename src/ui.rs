@@ -6,13 +6,13 @@ macro_rules! warn {
         if env::var("NO_EMOJI").is_ok() {
             println!("{} {}", style("!").red(), style(format_str).red());
         } else {
-            println! (
+            println!(
                 "{} {}",
                 style(Emoji("⚠️ ", "!")).red(),
                 style(formatstr).red()
             )
         }
-    }}
+    }};
 }
 
 macro_rules! success {

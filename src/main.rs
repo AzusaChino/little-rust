@@ -8,6 +8,7 @@ fn main() {
     println!("Welcome to little_rust, current version: {}", VERSION);
 }
 
+// check rustc whether exists
 fn rustc_exists() -> bool {
     Command::new("rustc")
         .args(&["--version"])
@@ -19,8 +20,8 @@ fn rustc_exists() -> bool {
 }
 
 mod toki {
-    use tokio::net::TcpListener;
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
+    use tokio::net::TcpListener;
 
     // async functions cannot be used for tests
     #[tokio::main]
@@ -58,7 +59,9 @@ mod whatever {
     fn t1() {
         if let Err(err) = try_main() {
             eprintln!("Error: {}", err);
-            err.chain().skip(1).for_each(|c| eprintln!("because: {}", c));
+            err.chain()
+                .skip(1)
+                .for_each(|c| eprintln!("because: {}", c));
             std::process::exit(1);
         }
     }
