@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use std::{env, fs, process};
 use std::error::Error;
 

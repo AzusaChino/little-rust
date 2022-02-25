@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use std::collections::{BTreeMap, HashMap};
 use std::sync::{Arc, Mutex};
 
@@ -22,7 +23,6 @@ struct Shared {
     background_task: Notify,
 }
 
-
 #[derive(Debug)]
 struct State {
     entries: HashMap<String, Entry>,
@@ -41,9 +41,7 @@ struct Entry {
 
 impl DbDropGuard {
     pub(crate) fn new() -> DbDropGuard {
-        DbDropGuard {
-            db: Db::new()
-        }
+        DbDropGuard { db: Db::new() }
     }
     pub(crate) fn db(&self) -> Db {
         self.db.clone()
@@ -88,10 +86,7 @@ impl Db {
 
         let expires_at = expire.map(|duration| {
             let when = Instant::now() + duration;
-            notify = state
-                .next_expiration()
-                .map(|ex| ex > when)
-                .unwrap_or(true);
+            notify = state.next_expiration().map(|ex| ex > when).unwrap_or(true);
             state.expirations.insert((when, id), key.clone());
             when
         });
@@ -153,10 +148,7 @@ impl Shared {
 
 impl State {
     fn next_expiration(&self) -> Option<Instant> {
-        self.expirations
-            .keys()
-            .next()
-            .map(|ex| ex.0)
+        self.expirations.keys().next().map(|ex| ex.0)
     }
 }
 

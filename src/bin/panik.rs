@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use std::fs::File;
 use std::io::ErrorKind;
 use std::path::PathBuf;
@@ -61,9 +62,8 @@ fn read_file(path: PathBuf) {
 
     let __f = File::open(path.clone()).unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
-            File::create(path.clone()).unwrap_or_else(|error| {
-                panic!("create file error {:?}", error)
-            })
+            File::create(path.clone())
+                .unwrap_or_else(|error| panic!("create file error {:?}", error))
         } else {
             panic!("error open file: {:?}", error)
         }

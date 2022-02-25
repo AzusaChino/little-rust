@@ -1,20 +1,23 @@
+#![allow(unused)]
 /*
-  A multi-threaded runtime for executing asynchronous code.
-  An asynchronous version of the standard library.
-  A large ecosystem of libraries.
- */
+ A multi-threaded runtime for executing asynchronous code.
+ An asynchronous version of the standard library.
+ A large ecosystem of libraries.
+*/
+use anyhow::Result;
+use mini_redis::client;
 use tokio;
 
+const CONFIG_TOML: &str = "Cargo.toml";
+
 #[tokio::main]
-async fn main() {
-    let blocking_task = tokio::task::spawn_blocking(|| {
-        print_hello();
-    });
+async fn main() -> Result<()> {
+    // let mut client = client::connect("127.0.0.1:6379").await?;
 
-    blocking_task.await.unwrap();
-}
+    // client.set("hello", "world".into()).await?;
 
+    // let result = client.get("hello").await?;
 
-fn print_hello() {
-    println!("hello");
+    println!("Got value from the server; result={:?}", 0);
+    Ok(())
 }

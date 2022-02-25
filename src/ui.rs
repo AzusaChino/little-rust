@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 macro_rules! warn {
     ($fmt:literal, $ex:expr) => {{
         use console::{style, Emoji};
