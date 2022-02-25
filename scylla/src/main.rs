@@ -37,8 +37,8 @@ async fn main() -> Result<()> {
         Duration::seconds(1000000000000),
         Duration::seconds(10000000000009),
     )
-        .await?;
+    .await?;
     println!("     >> Measurements: {:?}", measurements);
 
-    OK(())
+    Ok(())
 }

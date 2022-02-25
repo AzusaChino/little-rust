@@ -47,3 +47,34 @@ git-fetch-with-cli = true
 ## mdbook
 
 I think mdbook is good project to learn rust usage, so I decided to `Ctrl+C` and `Ctrl+V` all the codes to this repo.
+
+## About `?`
+
+Rust handles error uses `Result`
+
+```rust
+fn fn1(i: i32) -> Result<i32, Error> {
+    if i % 2 == 0 {
+        Ok(i / 2)
+    } else {
+        Err(/*Something*/)
+    }
+}
+
+fn do_the_thing(i: i32) {
+    let i = match fn1(i) {
+        Ok(i) => i,
+        Err(e) => return Err(e),
+    };
+
+    println!("{}", i);
+}
+
+// 1. unpacks the Result if OK
+// 2. returns the error if not, calling Into::into on the error
+//    value to potentially convert it to another type.
+fn do_the_thing_better(i:i32) {
+    let i = fn1(i)?;
+    println!("{}", i);
+}
+```

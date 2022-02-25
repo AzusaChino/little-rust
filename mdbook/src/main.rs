@@ -15,5 +15,8 @@ fn main() -> Result<()> {
     } else {
         println!("No git user configured");
     }
+    // unicode 4 Byte
+    let x = '中';
+    println!("size is {}", std::mem::size_of_val(&x));
     Ok(())
 }

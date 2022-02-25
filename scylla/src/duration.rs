@@ -1,9 +1,9 @@
+use scylla::frame::response::result::CqlValue;
+use scylla::frame::value::{Value, ValueTooBig};
 use scylla::frame::{
     response::cql_to_rust::{FromCqlVal, FromCqlValError},
     value::Timestamp,
 };
-use scylla::frame::response::result::CqlValue;
-use scylla::frame::value::{Value, ValueTooBig};
 
 #[derive(Debug)]
 pub struct Duration(chrono::Duration);
@@ -22,6 +22,6 @@ impl Value for Duration {
 
 impl FromCqlVal<Option<CqlValue>> for Duration {
     fn from_cql(cql_val: Option<CqlValue>) -> Result<Self, FromCqlValError> {
-        chrono::Duration::from_cql(cql_val?).map(Self)
+        chrono::Duration::from_cql(cql_val.unwrap()).map(Self)
     }
 }

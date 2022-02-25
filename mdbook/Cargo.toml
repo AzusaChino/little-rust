@@ -19,13 +19,13 @@ description = "Creates a book from markdown files"
 anyhow = "1.0.28"
 chrono = "0.4"
 clap = "2.24"
-env_logger = "0.7.1"
+env_logger = "0.9.0"
 handlebars = "4.0"
 lazy_static = "1.0"
 log = "0.4"
 memchr = "2.0"
 opener = "0.5"
-pulldown-cmark = { version = "0.9.1", default-features = false }
+pulldown-cmark = { version = "0.8.0", default-features = false }
 regex = "1.0.0"
 serde = "1.0"
 serde_derive = "1.0"
@@ -49,11 +49,11 @@ elasticlunr-rs = { version = "2.3", optional = true, default-features = false }
 ammonia = { version = "3", optional = true }
 
 [dev-dependencies]
-assert_cmd = "1"
+assert_cmd = "2.0.2"
 predicates = "2"
 select = "0.5"
 semver = "1.0"
-pretty_assertions = "0.6"
+pretty_assertions = "1.0.0"
 walkdir = "2.0"
 
 [features]
