@@ -80,7 +80,7 @@ fn value_in_cents(coin: &Coin) -> u8 {
 fn plus_one(x: Option<i32>) -> Option<i32> {
     match x {
         None => None,
-        Some(i) => Some(i + 1)
+        Some(i) => Some(i + 1),
     }
 }
 
@@ -102,6 +102,7 @@ fn dice(dice: u8) {
     }
 }
 
+#[allow(unused)]
 fn if_constitute() {
     let mut count = 0;
     let coin = Coin::Dime;

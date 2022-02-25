@@ -1,3 +1,4 @@
+#[allow(unused)]
 use clap::{App, Arg, ArgMatches, SubCommand};
 
 // Create clap subcommand arguments

@@ -45,8 +45,7 @@ pub fn create_file(path: &Path) -> Result<File> {
 /// assert_eq!(path_to_root(path), "../../");
 /// ```
 pub fn path_to_root<P: Into<PathBuf>>(path: P) -> String {
-    path
-        .into()
+    path.into()
         .parent()
         .expect("")
         .components()
@@ -68,13 +67,12 @@ pub fn remove_dir_content(dir: &Path) -> Result<()> {
             if item.is_dir() {
                 fs::remove_dir_all(item)?;
             } else {
-                fs::remove_file(item);
+                fs::remove_file(item)?;
             }
         }
     }
     Ok(())
 }
-
 
 pub fn get_404_output_file(intput_404: &Option<String>) -> String {
     intput_404
@@ -98,7 +96,8 @@ pub fn copy_files_except_ext(
 
     for entry in fs::read_dir(from)? {
         let entry = entry?;
-        let metadata = entry.path()
+        let metadata = entry
+            .path()
             .metadata()
             .with_context(|| format!("Failed to read {:?}", entry.path()))?;
 
@@ -128,11 +127,15 @@ pub fn copy_files_except_ext(
                     continue;
                 }
             }
-            fs::copy(entry.path(),
-                     &to.join(entry
-                         .path()
-                         .file_name()
-                         .expect("a file should have a file name...")))?;
+            fs::copy(
+                entry.path(),
+                &to.join(
+                    entry
+                        .path()
+                        .file_name()
+                        .expect("a file should have a file name..."),
+                ),
+            )?;
         }
     }
 
@@ -141,20 +144,23 @@ pub fn copy_files_except_ext(
 
 #[cfg(test)]
 mod tests {
-    use std::{fs, io::Result, path::Path};
+    use anyhow::Result;
+    use std::io;
+    use std::path::Path;
     use std::path::PathBuf;
 
-    use crate::utils::fs::{create_file, path_to_root, write_file};
+    use crate::utils::fs::{path_to_root, write_file};
 
     use super::normalize_path;
 
     #[cfg(target_os = "windows")]
-    fn symlink<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> Result<()> {
+    fn symlink<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<()> {
         std::os::windows::fs::symlink_file(src, dst)
     }
 
+    #[allow(unused)]
     #[cfg(not(target_os = "windows"))]
-    fn symlink<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> Result<()> {
+    fn symlink<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<()> {
         std::os::unix::fs::symlink(src, dst)
     }
 
@@ -165,11 +171,11 @@ mod tests {
     }
 
     #[test]
-    fn test_create_file() {
+    fn test_create_file() -> Result<()> {
         let build_dir = std::env::current_dir().unwrap();
         let filename = PathBuf::from("abc.txt");
         let content = "haha".as_bytes();
-        write_file(build_dir.as_path(), filename, content);
+        write_file(build_dir.as_path(), filename, content)
     }
 
     #[test]

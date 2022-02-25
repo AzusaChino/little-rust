@@ -50,6 +50,7 @@ impl Render {
     }
 }
 
+#[allow(unused)]
 fn function_area() {
     let r;
     {
@@ -75,16 +76,16 @@ fn test_int() {
 }
 
 fn _main() {
-    let s = String::from("hello");  // s comes into scope
+    let s = String::from("hello"); // s comes into scope
 
-    takes_ownership(s);             // s's value moves into the function...
-    // ... and so is no longer valid here
+    takes_ownership(s); // s's value moves into the function...
+                        // ... and so is no longer valid here
 
-    let x = 5;                      // x comes into scope
+    let x = 5; // x comes into scope
 
-    makes_copy(x);                  // x would move into the function,
-    // but i32 is Copy, so it's okay to still
-    // use x afterward
+    makes_copy(x); // x would move into the function,
+                   // but i32 is Copy, so it's okay to still
+                   // use x afterward
 }
 
 fn takes_ownership(some_string: String) {
@@ -149,7 +150,7 @@ fn im_mu() {
 
     let r1 = &s; // no problem
     let r2 = &s; // no problem
-    // let _r3 = &mut s; // BIG PROBLEM
+                 // let _r3 = &mut s; // BIG PROBLEM
 
     println!("{}, {}", r1, r2);
 }

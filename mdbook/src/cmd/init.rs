@@ -31,6 +31,7 @@ pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {
         )
 }
 
+#[allow(unused)]
 /// Init command implementation
 pub fn execute(args: &ArgMatches) -> Result<()> {
     let book_dir = "";
@@ -81,7 +82,7 @@ fn get_author_name() -> Option<String> {
 
 fn request_book_title() -> Option<String> {
     println!("What title would you like to give the book?");
-    io::stdout().flush().unwrap();
+    // io::stdout().flush().unwrap();
     let mut resp = String::new();
     io::stdin().read_line(&mut resp).unwrap();
     let resp = resp.trim();
@@ -93,7 +94,7 @@ fn request_book_title() -> Option<String> {
 }
 
 fn confirm() -> bool {
-    io::stdout().flush().unwrap();
+    // io::stdout().flush().unwrap();
     let mut s = String::new();
     io::stdin().read_line(&mut s).ok();
     match &*s.trim() {
