@@ -1,6 +1,6 @@
 #[derive(Debug)]
 pub struct Car {
-    pub color: String,
+    pub color: Color,
     pub motor: Transmission,
     pub roof: bool,
     pub age: (Age, u32),
@@ -19,6 +19,7 @@ pub enum Age {
     Used,
 }
 
+#[derive(Debug)]
 pub enum Color {
     Blue,
     Green,

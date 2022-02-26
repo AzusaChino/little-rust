@@ -1,5 +1,5 @@
-use std::{env, fs};
 use std::error::Error;
+use std::{env, fs};
 
 pub mod hello;
 
@@ -31,12 +31,12 @@ impl Config {
 
         let qry = match args.next() {
             None => Err("no query string"),
-            Some(arg) => Ok(arg)
+            Some(arg) => Ok(arg),
         };
 
         let filename = match args.next() {
             Some(arg) => arg,
-            None => panic!("no filename")
+            None => panic!("no filename"),
         };
 
         let case_sensitive = env::var("CASE_SENSITIVE").is_ok();
@@ -50,8 +50,7 @@ impl Config {
 }
 
 pub fn run(con: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(con.filename)
-        .expect("Error reading file");
+    let contents = fs::read_to_string(con.filename).expect("Error reading file");
 
     let results = if con.case_sensitive {
         search(&con.query, &contents)

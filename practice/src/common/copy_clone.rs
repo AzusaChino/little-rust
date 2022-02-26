@@ -33,3 +33,9 @@ fn json_() {
         }
     });
 }
+
+#[allow(unused)]
+fn unused() {
+    test_copy_and_clone();
+    test_clone_only();
+}

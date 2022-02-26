@@ -1,27 +1,23 @@
-pub use sample::{Age, Car};
+pub use sample::{Age, Car, Color};
 
+mod common;
 pub mod sample;
 pub mod whatever;
-mod common;
 
 mod only_lib {
 
+    use crate::sample::Transmission;
     use crate::Age;
     use crate::Car;
-    use crate::sample::Transmission;
+    use crate::Color;
 
+    #[allow(unused)]
     fn car_factory() -> Car {
         return Car {
-            color: "".to_string(),
+            color: Color::Blue,
             motor: Transmission::Manual,
             roof: false,
             age: (Age::New, 0),
         };
-    }
-
-    #[test]
-    fn test_car_factory() {
-        let _car = car_factory();
-        println!("{:?}", _car);
     }
 }

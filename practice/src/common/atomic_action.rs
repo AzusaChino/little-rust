@@ -2,6 +2,12 @@ use std::{hint, thread};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
+#[allow(unused)]
+fn use_unused() {
+    use_as_lock();
+    join_self();
+}
+
 fn use_as_lock() {
     // Arc is share_ptr
     let spin_lock = Arc::new(AtomicUsize::new(1));

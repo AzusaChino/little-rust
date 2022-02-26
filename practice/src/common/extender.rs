@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 fn basic_usage() {
     // String impl Extend<&'a char>
     let mut message = String::from("the first three letters are: ");
@@ -20,7 +22,7 @@ impl MyCollection {
 }
 
 impl Extend<i32> for MyCollection {
-    fn extend<T: IntoIterator<Item=i32>>(&mut self, iter: T) {
+    fn extend<T: IntoIterator<Item = i32>>(&mut self, iter: T) {
         for elem in iter {
             self.add(elem);
         }

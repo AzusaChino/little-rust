@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use anyhow::Result;
 
 fn halves_if_even(i: i32) -> Result<i32> {
@@ -13,7 +15,7 @@ fn halves_if_even(i: i32) -> Result<i32> {
 fn do_the_thing(i: i32) -> Result<i32> {
     let i = match halves_if_even(i) {
         Ok(i) => i,
-        Err(e) => return Err(e)
+        Err(e) => return Err(e),
     };
     Ok(i)
 }

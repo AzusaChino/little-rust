@@ -1,13 +1,14 @@
 #![allow(unused)]
 
-use std::{env, fs, process};
 use std::error::Error;
+use std::{env, fs, process};
 
-use minigrep::Config;
 use minigrep::hello::srv;
+use minigrep::Config;
 
 fn main() {
-    srv();
+    // srv();
+    run();
 }
 
 fn run() {
