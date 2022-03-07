@@ -48,7 +48,7 @@ git-fetch-with-cli = true
 
 I think mdbook is good project to learn rust usage, so I decided to `Ctrl+C` and `Ctrl+V` all the codes to this repo.
 
-## About `?`
+## About The `?`
 
 Rust handles error uses `Result`
 
