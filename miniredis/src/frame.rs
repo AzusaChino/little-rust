@@ -7,7 +7,6 @@ use std::fmt;
 use std::io::Cursor;
 use std::num::TryFromIntError;
 use std::string::FromUtf8Error;
-use anyhow::{Result};
 
 /// A frame in the Redis protocol.
 #[derive(Clone, Debug)]
@@ -26,7 +25,7 @@ pub enum Error {
     Incomplete,
 
     /// Invalid message encoding
-    Other(anyhow::Error),
+    Other(crate::Error),
 }
 
 impl Frame {

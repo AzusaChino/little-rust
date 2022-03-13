@@ -30,10 +30,4 @@ opt-level = 0
 opt-level = 3
 
 [workspace]
-members = [
-    "mdbook",
-    "minigrep",
-    "miniredis",
-    "practice",
-    "scylla"
-]
+members = ["miniredis", "practice"]

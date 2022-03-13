@@ -1,6 +1,9 @@
+#![allow(unused)]
 use anyhow::Result;
-use tokio::sync::broadcast;
-use tokio::sync::broadcast::Receiver;
+use tokio::sync::{
+    broadcast::{self, Receiver},
+    oneshot,
+};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -52,6 +55,65 @@ fn another_runner() {
         let name = fields[0];
         if let Ok(length) = fields[1].parse::<f32>() {
             println!("{}, {}cm", name, length);
+        }
+    }
+}
+
+async fn select() {
+    let (tx1, rx1) = oneshot::channel();
+    let (tx2, rx2) = oneshot::channel();
+    tokio::spawn(async {
+        let _ = tx1.send("one");
+    });
+
+    tokio::spawn(async {
+        let _ = tx2.send("two");
+    });
+
+    tokio::select! {
+        val = rx1 => {
+            println!("rx1 complete first with {:?}", val);
+        }
+        val = rx2 => {
+
+            println!("rx2 complete first with {:?}", val);
+        }
+    }
+}
+
+async fn some_operation() -> String {
+    // Compute value here
+    "".to_string()
+}
+
+async fn use_some_operation() {
+    let (mut tx1, rx1) = oneshot::channel();
+    let (tx2, rx2) = oneshot::channel();
+
+    tokio::spawn(async {
+        // Select on the operation and the oneshot's
+        // `closed()` notification.
+        tokio::select! {
+            val = some_operation() => {
+                let _ = tx1.send(val);
+            }
+            _ = tx1.closed() => {
+                // `some_operation()` is canceled, the
+                // task completes and `tx1` is dropped.
+            }
+        }
+    });
+
+    tokio::spawn(async {
+        let _ = tx2.send("two");
+    });
+
+    tokio::select! {
+        val = rx1 => {
+            println!("rx1 completed first with {:?}", val);
+        }
+        val = rx2 => {
+            println!("rx2 completed first with {:?}", val);
         }
     }
 }
