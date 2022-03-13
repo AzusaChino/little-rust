@@ -1,12 +1,18 @@
-use nix::sys::wait::waitpid;
-use nix::unistd::{fork, write, ForkResult};
+#[cfg(target_os = "windows")]
+fn main() {
+    println!("Oops, It's windows")
+}
 
 #[cfg(target_os = "linux")]
 fn main() {
     try_fork();
 }
 
+#[cfg(target_os = "linux")]
 fn try_fork() {
+    use nix::sys::wait::waitpid;
+    use nix::unistd::{fork, write, ForkResult};
+
     match unsafe { fork() } {
         Ok(ForkResult::Parent { child, .. }) => {
             println!(
