@@ -194,3 +194,23 @@ enum HttpFrame {
     },
 }
 ```
+
+## Send & Sync
+
+### Send
+
+如果类型 T 实现了 Send Trait，说明这个类型的变量在不同线程中传递所有权是安全的。
+
+如果一个类型可以安全地从一个线程 move 进入另一个线程，那么它就是 Send 类型。
+
+内部不包含引用的类型都是 Send。
+
+`Rc<T>` 不是 Send，`Arc<T>` 是 Send
+
+### Sync
+
+如果类型 T 实现了 Sync Trait，说明在不同的线程中使用`&T`访问同一个变量是安全的。
+
+基本数字类型是 Sync。
+
+所有具有"内部可变性"而又没有多线程同步考虑的类型都不是 Sync 的。`Cell<T>`, `RefCell<T>`
