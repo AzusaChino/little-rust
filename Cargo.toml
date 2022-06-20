@@ -8,19 +8,19 @@ license-file = "LICENSE"
 repository = "https://github.com/azusachino/little-rust"
 
 [dependencies]
-anyhow = "1.0.55"
-argh = "0.1.7"
-chrono = { version = "0.4.19", features = ["serde"] }
-toml = "0.5.8"
-rand = "0.8.5"
-tokio = { version = "1.17.0", features = ["full"] }
+anyhow = "1.0"
+argh = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+toml = "0.5"
+rand = "0.8"
+tokio = { version = "1.19", features = ["full"] }
 
 [[bin]]
 name = "little_rust"
 path = "src/main.rs"
 
 [dev-dependencies]
-json = "0.12.4"
+json = "0.12"
 
 [profile.dev]
 # The opt-level setting controls the number of optimizations Rust will apply to your code
@@ -30,4 +30,4 @@ opt-level = 0
 opt-level = 3
 
 [workspace]
-members = ["miniredis", "practice"]
+members = ["miniredis", "practice", "wasm-web"]
