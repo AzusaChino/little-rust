@@ -1,33 +1,11 @@
-[package]
-name = "little_rust"
-version = "0.0.2"
-authors = ["azusachino <azusachino@yahoo.com>"]
-edition = "2021"
-readme = "README.md"
-license-file = "LICENSE"
-repository = "https://github.com/azusachino/little-rust"
-
-[dependencies]
-anyhow = "1.0"
-argh = "0.1"
-chrono = { version = "0.4", features = ["serde"] }
-toml = "0.5"
-rand = "0.8"
-tokio = { version = "1.19", features = ["full"] }
-
-[[bin]]
-name = "little_rust"
-path = "src/main.rs"
-
-[dev-dependencies]
-json = "0.12"
-
-[profile.dev]
-# The opt-level setting controls the number of optimizations Rust will apply to your code
-opt-level = 0
+[workspace]
+members = ["miniredis", "practice", "wasm-web", "yui"]
 
 [profile.release]
-opt-level = 3
+lto = true
+codegen-units = 1
 
-[workspace]
-members = ["miniredis", "practice", "wasm-web"]
+[profile.release.package.agent]
+opt-level = 'z'
+debug = false
+debug-assertions = false

@@ -1,8 +1,17 @@
 pub use sample::{Age, Car, Color};
 
+pub mod client;
 mod common;
+mod demo;
+pub mod exercise;
+mod exercises;
+pub mod thread_pool;
+pub mod ui;
+
 pub mod sample;
 pub mod whatever;
+
+pub use client::{Client, Connection};
 
 mod only_lib {
 

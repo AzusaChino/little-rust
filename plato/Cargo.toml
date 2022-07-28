@@ -1,0 +1,8 @@
+[package]
+name = "plato"
+version = "0.0.1"
+edition = "2021"
+description = "The realistic destiny"
+
+[dependencies]
+anyhow = "1.0"
