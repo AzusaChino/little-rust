@@ -7,13 +7,11 @@ check-revoke = false # Indicates whether SSL certs are checked for revocation
 multiplexing = false # whether or not to use HTTP/2 multiplexing where possible
 
 [source.crates-io]
-replace-with = 'rsproxy'
+replace-with = 'ustc'
 
-[source.rsproxy]
-registry = "https://rsproxy.cn/crates.io-index"
-
-[registries.rsproxy]
-index = "https://rsproxy.cn/crates.io-index"
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+# registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 
 [net]
 git-fetch-with-cli = true

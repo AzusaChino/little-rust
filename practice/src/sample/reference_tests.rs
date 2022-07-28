@@ -97,4 +97,103 @@ mod tests {
         s2.borrow_mut().push(4);
         println!("{}", p2);
     }
+
+    #[test]
+    fn arc_test() {
+        use std::sync::Arc;
+        use std::thread;
+        let numbers: Vec<_> = (0..100u32).collect();
+        let shared_numbers_arc = Arc::new(numbers);
+
+        for _ in 0..10 {
+            let child_numbers = shared_numbers_arc.clone();
+            thread::spawn(move || {
+                let local_numbers = &child_numbers[..];
+                println!("{:?}", local_numbers);
+            });
+        }
+        println!("done");
+    }
+
+    #[test]
+    fn mutex_test() {
+        use std::sync::{Arc, Mutex};
+        use std::thread;
+
+        const COUNT: u32 = 10000;
+
+        let global = Arc::new(Mutex::new(0));
+        let clone1 = global.clone();
+        let thread1 = thread::spawn(move || {
+            for _ in 0..COUNT {
+                let mut value = clone1.lock().unwrap();
+                *value += 1;
+            }
+        });
+
+        let clone2 = global.clone();
+        let thread2 = thread::spawn(move || {
+            for _ in 0..COUNT {
+                let mut value = clone2.lock().unwrap();
+                *value -= 1;
+            }
+        });
+
+        thread1.join().ok();
+        thread2.join().ok();
+
+        println!("final value: {:?}", global);
+    }
+
+    #[test]
+    fn barrier_test() {
+        use std::sync::{Arc, Barrier};
+        use std::thread::{self, JoinHandle};
+
+        let barrier = Arc::new(Barrier::new(10));
+        let mut handlers: Vec<JoinHandle<()>> = vec![];
+
+        for i in 0..10 {
+            let c = barrier.clone();
+            let t = thread::spawn(move || {
+                println!("waiting {}", i);
+                c.wait();
+                println!("{} done", i);
+            });
+            handlers.push(t);
+        }
+
+        for h in handlers {
+            h.join().ok();
+        }
+    }
+
+    #[test]
+    fn cond_var_test() {
+        use std::sync::{Arc, Condvar, Mutex};
+        use std::thread;
+        use std::time::Duration;
+        let pair = Arc::new((Mutex::new(false), Condvar::new()));
+        let p2 = pair.clone();
+
+        thread::spawn(move || {
+            thread::sleep(Duration::from_secs(1));
+            let &(ref lock, ref cvar) = &*p2;
+            let mut started = lock.lock().unwrap();
+            *started = true;
+            cvar.notify_one();
+            println!("child thread {}", *started);
+        });
+
+        let &(ref lock, ref cvar) = &*pair;
+        let mut started = lock.lock().unwrap();
+
+        println!("before wait {}", *started);
+
+        while !*started {
+            started = cvar.wait(started).unwrap();
+        }
+
+        println!("after wait {}", *started);
+    }
 }

@@ -14,12 +14,17 @@ name = "nixs"
 path = "src/bin/nixs.rs"
 
 [dependencies]
-anyhow = "1.0.51"
+# local
+plato = { path = "../plato" }
+
+# remote
+anyhow = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
-crossbeam = "0.8.1"
-futures = "0.3.21"
+crossbeam = "0.8"
+futures = "0.3"
+rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tokio = { version = "1.15.0", features = ["full"] }
-nix = "0.23.1"
-libc = "0.2.112"
+tokio = { version = "1.20", features = ["full"] }
+nix = "0.24"
+libc = "0.2"
