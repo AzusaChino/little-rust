@@ -12,3 +12,15 @@ pub struct Client {
     pub(crate) conn: Arc<Mutex<Connection>>,
     pub(crate) txn: Cell<Option<(u64, Mode)>>,
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn run_client() {
+        let _client = Client {
+            conn: Arc::new(Mutex::new(Connection {})),
+            txn: Cell::new(None),
+        };
+    }
+}
