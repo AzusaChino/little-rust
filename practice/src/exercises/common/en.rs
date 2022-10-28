@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use crate::exercises::common::struck::Color;
 
 enum IpAddrKind {

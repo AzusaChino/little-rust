@@ -1,3 +1,4 @@
+#![allow(unused)]
 // How to create threads to run multiple pieces of code at the same time
 // Message-passing concurrency, where channels send messages between threads
 // Shared-state concurrency, where multiple threads have access to some piece of data
@@ -62,9 +63,7 @@ mod thd {
     }
 
     fn create_handle(f: fn()) -> JoinHandle<()> {
-        return thread::spawn(move || {
-            f()
-        });
+        return thread::spawn(move || f());
     }
 
     fn move_c() {

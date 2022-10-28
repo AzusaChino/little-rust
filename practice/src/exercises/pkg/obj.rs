@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 pub struct AverageCollection {
     list: Vec<i32>,
     average: f64,
@@ -54,7 +56,10 @@ mod other {
         components: Vec<T>,
     }
 
-    impl<T> Screen<T> where T: Draw {
+    impl<T> Screen<T>
+    where
+        T: Draw,
+    {
         pub fn run(&self) {
             for component in self.components.iter() {
                 component.draw();

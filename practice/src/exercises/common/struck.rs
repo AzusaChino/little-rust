@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 trait Area {
     fn area(&self) -> u64;
 }

@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 // Box<T> for allocating values on the heap
 // Rc<T>, a reference counting type that enables multiple ownership
 // Ref<T> and RefMut<T>, accessed through RefCell<T>, a type that enforces the borrowing rules at runtime instead of compile time
@@ -24,14 +26,12 @@ fn main() {
 //     }
 // }
 
-
 enum Message {
     Quit,
     Move { x: i32, y: i32 },
     Write(String),
     ChangeColor(i32, i32, i32),
 }
-
 
 fn deref() {
     let x = 5;
@@ -105,12 +105,10 @@ mod box_ {
     }
 
     fn t_b() {
-
         // stack size = i32 + box(usize)
         let __list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
     }
 }
-
 
 mod rc {
     use std::rc::Rc;
@@ -153,8 +151,8 @@ mod ref_cell {
     }
 
     impl<'a, T> LimitTracker<'a, T>
-        where
-            T: Messenger,
+    where
+        T: Messenger,
     {
         pub fn new(messenger: &T, max: usize) -> LimitTracker<T> {
             LimitTracker {
@@ -194,7 +192,7 @@ mod ref_cell {
         impl MockMessenger {
             fn new() -> MockMessenger {
                 MockMessenger {
-                    sent_messages: RefCell::new(vec![])
+                    sent_messages: RefCell::new(vec![]),
                 }
             }
         }
@@ -372,25 +370,19 @@ mod sp {
     }
 
     fn t_rc() {
-        let gadget_owner: Rc<Owner> = Rc::new(
-            Owner {
-                name: "Gadget Man".to_string(),
-                gadgets: RefCell::new(vec![]),
-            }
-        );
+        let gadget_owner: Rc<Owner> = Rc::new(Owner {
+            name: "Gadget Man".to_string(),
+            gadgets: RefCell::new(vec![]),
+        });
 
-        let g1 = Rc::new(
-            Gadget {
-                id: 1,
-                owner: Rc::clone(&gadget_owner),
-            }
-        );
-        let g2 = Rc::new(
-            Gadget {
-                id: 2,
-                owner: gadget_owner.clone(),
-            }
-        );
+        let g1 = Rc::new(Gadget {
+            id: 1,
+            owner: Rc::clone(&gadget_owner),
+        });
+        let g2 = Rc::new(Gadget {
+            id: 2,
+            owner: gadget_owner.clone(),
+        });
 
         {
             let mut gadgets = gadget_owner.gadgets.borrow_mut();

@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use std::fmt::Debug;
 use std::fmt::Display;
 
@@ -59,7 +61,11 @@ pub fn notify(item: &impl Summary) {
 
 pub fn notifying<T: Summary + Display>(_item: &T) {}
 
-fn some_function<T, U>(_t: &T, _u: &U) -> i32 where T: Display + Clone, U: Clone + Debug {
+fn some_function<T, U>(_t: &T, _u: &U) -> i32
+where
+    T: Display + Clone,
+    U: Clone + Debug,
+{
     0
 }
 
@@ -113,17 +119,13 @@ fn important() {
     let novel = String::from("from ");
     let first_sentence = novel.split(' ').next().expect("Could not find space");
     let _i = ImportantExcerpt {
-        part: first_sentence
+        part: first_sentence,
     };
 }
 
-fn longest_with_an_announcement<'a, T>(
-    x: &'a str,
-    y: &'a str,
-    ann: T,
-) -> &'a str
-    where
-        T: Display,
+fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+where
+    T: Display,
 {
     println!("Announcement! {}", ann);
     if x.len() > y.len() {

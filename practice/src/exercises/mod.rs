@@ -1,9 +1,7 @@
-pub use pkg::runner;
-
-pub mod io;
+pub mod closures;
 pub mod common;
 pub mod concurrent;
-pub mod pkg;
-pub mod closures;
-pub mod req;
+pub mod io;
 mod lifecycle;
+pub mod pkg;
+pub mod req;

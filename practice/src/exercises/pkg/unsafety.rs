@@ -4,6 +4,7 @@
 // Implement an unsafe trait
 // Access fields of unions
 
+#[cfg(test)]
 mod super_power {
     fn a() {
         let mut num = 5;
@@ -17,13 +18,8 @@ mod super_power {
         }
     }
 
-    #[cfg(test)]
-    mod test {
-        use super::*;
-
-        #[test]
-        fn test_a() {
-            a();
-        }
+    #[test]
+    fn test_a() {
+        a();
     }
 }
