@@ -7,4 +7,5 @@
 //! RwLock：用于全局变量的初始化。提供了一个相互排斥机制，允许多个读同时访问，同时一次只允许一个写。在某些情况下，这可能比mutex更有效。
 
 mod atomic;
-mod index;
+mod rc;
+mod thread;
