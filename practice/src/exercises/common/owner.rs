@@ -237,3 +237,52 @@ mod cl {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    fn is_copy<T: Copy>() {}
+
+    fn types_impl_copy_trait() {
+        is_copy::<bool>();
+        is_copy::<char>();
+
+        // all iXX and uXX, usize/isize, fXX implement Copy trait
+        is_copy::<i8>();
+        is_copy::<u64>();
+        is_copy::<f32>();
+        is_copy::<usize>();
+
+        // function (pointer) is Copy
+        is_copy::<fn()>();
+
+        // raw pointer is Copy
+        is_copy::<*const String>();
+        is_copy::<*mut String>();
+
+        // array/tuple with values which is Copy is Copy
+        is_copy::<[u8; 4]>();
+        is_copy::<(&str, &str)>();
+    }
+
+    // cargo check error
+    fn types_not_impl_copy_trait() {
+        // // unsized or dynamic sized type is not Copy
+        // is_copy::<str>();
+        // is_copy::<[u8]>();
+        // is_copy::<Vec<u8>>();
+        // is_copy::<String>();
+
+        // // mutable reference is not Copy
+        // is_copy::<&mut String>();
+
+        // // array / tuple with values that not Copy is not Copy
+        // is_copy::<[Vec<u8>; 4]>();
+        // is_copy::<(String, u32)>();
+    }
+
+    #[test]
+    fn test() {
+        types_impl_copy_trait();
+        types_not_impl_copy_trait();
+    }
+}

@@ -38,13 +38,7 @@ pub struct Exercise {
     pub hint: String,
 }
 
-fn test_client() -> Client {
-    Client {
-        conn: Arc::new(Mutex::new(Connection {})),
-        txn: Cell::new(None),
-    }
-}
-
 pub fn do_me_a_favor() {
-    println!("do me a favor")
+    println!("do me a favor");
+    temp_file();
 }
