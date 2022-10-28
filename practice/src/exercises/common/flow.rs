@@ -1,50 +1,95 @@
-fn sample() {
-    let mut num = 3;
-    if num != 0 {
-        println!("ok")
-    } else {
-        println!("ok ko")
-    }
+#[cfg(test)]
+mod tests {
 
-    loop {
-        if num > 10 {
-            break;
-        }
-        println!("current: {}", num);
-        num += 1;
-    }
-
-    let mut count = 0;
-    // label with a single quote
-    'counting_up: loop {
-        println!("count = {}", count);
-        let mut remaining = 10;
-
+    fn fib1(n: u8) {
+        let (mut a, mut b, mut i) = (1, 1, 2);
         loop {
-            println!("remaining = {}", remaining);
-            if remaining == 9 {
+            let c = a + b;
+            a = b;
+            b = c;
+            i += 1;
+            println!("next val is {}", b);
+            if i >= n {
                 break;
             }
-            if count == 2 {
-                break 'counting_up;
-            }
-            remaining -= 1;
         }
-
-        count += 1;
     }
-    println!("End count = {}", count);
 
-    let mut counter = 1;
-    let result = loop {
-        counter += 1;
-
-        if counter == 10 {
-            break counter * 2;
+    fn fib2(n: u8) {
+        let (mut a, mut b, mut i) = (1, 1, 2);
+        while i < n {
+            let c = a + b;
+            a = b;
+            b = c;
+            i += 1;
+            println!("next val is {}", b);
         }
-    };
+    }
 
-    println!("The result is {}", result);
+    fn fib3(n: u8) {
+        let (mut a, mut b) = (1, 1);
+        for _i in 2..n {
+            let c = a + b;
+            a = b;
+            b = c;
+            println!("next val is {}", b);
+        }
+    }
 
-    for _abc in 1..2 {}
+    #[test]
+    fn sample() {
+        let mut num = 3;
+        if num != 0 {
+            println!("ok")
+        } else {
+            println!("ok ko")
+        }
+
+        loop {
+            if num > 10 {
+                break;
+            }
+            println!("current: {}", num);
+            num += 1;
+        }
+
+        let mut count = 0;
+        // label with a single quote
+        'counting_up: loop {
+            println!("count = {}", count);
+            let mut remaining = 10;
+
+            loop {
+                println!("remaining = {}", remaining);
+                if remaining == 9 {
+                    break;
+                }
+                if count == 2 {
+                    break 'counting_up;
+                }
+                remaining -= 1;
+            }
+
+            count += 1;
+        }
+        println!("End count = {}", count);
+
+        let mut counter = 1;
+        let result = loop {
+            counter += 1;
+
+            if counter == 10 {
+                break counter * 2;
+            }
+        };
+
+        println!("The result is {}", result);
+
+        for n in 1..2 {
+            println!("{}", n)
+        }
+        fib1(10);
+        fib2(10);
+        fib3(10);
+    }
 }

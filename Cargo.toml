@@ -1,5 +1,5 @@
 [workspace]
-members = ["miniredis", "practice", "tar", "wasm-web", "yui"]
+members = ["httpie", "miniredis", "practice", "tar", "wasm-web", "yui"]
 
 [profile.release]
 lto = true

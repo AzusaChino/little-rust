@@ -2,6 +2,7 @@
 mod test {
     use std::fs;
 
+    #[test]
     fn http_md() {
         let url = "https://www.rust-lang.org";
         let output = "output.md";

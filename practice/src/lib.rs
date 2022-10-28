@@ -3,6 +3,7 @@ pub use sample::{Age, Car, Color};
 pub mod client;
 mod common;
 mod demo;
+mod deps;
 pub mod exercise;
 mod exercises;
 pub mod thread_pool;
