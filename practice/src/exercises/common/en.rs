@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-use crate::exercises::common::struck::Color;
+struct Color;
 
 enum IpAddrKind {
     V4,
