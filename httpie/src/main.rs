@@ -11,14 +11,9 @@ use syntect::{
     util::{as_24_bit_terminal_escaped, LinesWithEndings},
 };
 
-// 以下部分用于处理 CLI
-
-// 定义 httpie 的 CLI 的主入口，它包含若干个子命令
-// 下面 /// 的注释是文档，clap 会将其作为 CLI 的帮助
-
 /// A naive httpie implementation with Rust, can you imagine how easy it is?
 #[derive(Parser, Debug)]
-#[clap(version = "1.0", author = "Tyr Chen <tyr@chen.com>")]
+#[clap(version = "1.0")]
 struct Opts {
     #[clap(subcommand)]
     subcmd: SubCommand,

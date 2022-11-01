@@ -1,8 +1,10 @@
+mod alloca;
 mod atomic_action;
 mod copy_clone;
 mod enums;
 mod extender;
 mod path_ruler;
+mod smart_pointer;
 
 #[cfg(test)]
 mod test_reader {
@@ -196,6 +198,7 @@ mod test_trait {
 
 #[cfg(test)]
 mod test_traitor {
+
     struct SentenceIter<'a> {
         s: &'a mut &'a str,
         delimiter: char,
@@ -240,4 +243,17 @@ mod test_traitor {
         assert_eq!(iter.next(), Some("This is the 2nd sentence."));
         assert_eq!(iter.next(), None);
     }
+
+    pub trait HList: Sized {}
+
+    pub struct HNil;
+
+    impl HList for HNil {}
+
+    pub struct HCons<H, T> {
+        pub head: H,
+        pub tail: T,
+    }
+
+    impl<H, T: HList> HList for HCons<H, T> {}
 }
