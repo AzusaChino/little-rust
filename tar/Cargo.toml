@@ -1,8 +1,8 @@
 [package]
-name = "yui"
+name = "tar"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-crossterm = "0.23"
-tui = "0.17"
+# local
+plato = { path = "../plato" }

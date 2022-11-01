@@ -21,10 +21,15 @@ plato = { path = "../plato" }
 anyhow = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
 crossbeam = "0.8"
+dashmap = "5.1"
 futures = "0.3"
 rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tokio = { version = "1.20", features = ["full"] }
-nix = "0.24"
+tokio = { version = "1.17", features = ["full"] }
+nix = "0.25"
 libc = "0.2"
+lazy_static = "1.4"
+reqwest = { version = "0.11", features = ["blocking"] }
+html2md = "0.2"
+regex = "1.6"

@@ -1,12 +1,20 @@
+#![allow(unused)]
+
 use std::thread;
 use std::time::Duration;
 
-struct Catcher<T> where T: Fn(u32) -> u32 {
+struct Catcher<T>
+where
+    T: Fn(u32) -> u32,
+{
     calculation: T,
     value: Option<u32>,
 }
 
-impl<T> Catcher<T> where T: Fn(u32) -> u32 {
+impl<T> Catcher<T>
+where
+    T: Fn(u32) -> u32,
+{
     fn new(calculation: T) -> Catcher<T> {
         Catcher {
             calculation,
@@ -21,7 +29,7 @@ impl<T> Catcher<T> where T: Fn(u32) -> u32 {
                 self.value = Some(v);
                 v
             }
-            Some(v) => v
+            Some(v) => v,
         }
     }
 }
@@ -72,6 +80,6 @@ fn add_one_v1(x: u32) -> u32 {
 
 fn version_up() {
     let _add_one_v2 = |x: u32| -> u32 { x + 1 };
-    let _add_one_v3 = |x: u32| { x + 1 };
+    let _add_one_v3 = |x: u32| x + 1;
     let _add_one_v4 = |x: i32| x + 1;
 }
