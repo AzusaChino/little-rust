@@ -1,5 +1,6 @@
 mod alloca;
 mod atomic_action;
+mod container;
 mod copy_clone;
 mod enums;
 mod extender;
@@ -10,6 +11,10 @@ mod smart_pointer;
 mod test_reader {
     use std::fs::File;
     use std::io::{BufReader, Read, Result};
+
+    const fn init_len() -> usize {
+        return 5;
+    }
 
     struct MyReader<R> {
         reader: R,
@@ -40,7 +45,98 @@ mod test_reader {
         let mut reader = MyReader::new(BufReader::new(f));
 
         let size = reader.process().unwrap();
+        let sz = init_len();
         println!("total size read: {}", size);
+        println!("init size: {}", sz);
+    }
+
+    fn two_times_impl() -> impl Fn(i32) -> i32 {
+        let i = 2;
+        move |j| j * i
+    }
+
+    #[test]
+    fn main_fn() {
+        let r = two_times_impl();
+        assert_eq!(r(2), 4);
+    }
+
+    #[test]
+    fn main_match() {
+        let n = 42;
+        match n {
+            0 => println!("zero"),
+            // 1...3 => println!("all"),
+            5 | 7 | 13 => println!("bad luck"),
+            // 使用操作符@可以将模式中的值绑定给一个变量，供分支右侧的代码使用
+            n @ 42 => println!("answer is {}", n),
+            _ => println!("common"),
+        }
+
+        let mut v = vec![1, 2, 3, 4, 5];
+        let mut vc = v.clone();
+        loop {
+            match v.pop() {
+                Some(x) => println!("{}", x),
+                None => break,
+            }
+        }
+
+        while let Some(x) = vc.pop() {
+            println!("{}", x);
+        }
+    }
+
+    #[test]
+    fn main_range() {
+        assert_eq!((1..5), std::ops::Range { start: 1, end: 5 });
+        assert_eq!((1..=5), std::ops::RangeInclusive::new(1, 5));
+    }
+
+    #[test]
+    fn main_slice() {
+        let arr: [i32; 5] = [1, 2, 3, 4, 5];
+        assert_eq!(&arr, &[1, 2, 3, 4, 5]);
+        assert_eq!(&arr[1..], [2, 3, 4, 5]);
+
+        assert_eq!(&arr.len(), &5);
+        assert_eq!(&arr.is_empty(), &false);
+
+        let arr = &mut [1, 2, 3];
+        arr[1] = 7;
+
+        assert_eq!(arr, &[1, 7, 3]);
+
+        let vec = vec![1, 2, 3];
+        assert_eq!(&vec[..], [1, 2, 3]);
+    }
+
+    #[test]
+    fn main_str() {
+        let truth: &'static str = "Rust";
+        let ptr = truth.as_ptr();
+        let len = truth.len();
+
+        assert_eq!(4, len);
+
+        let s = unsafe {
+            let slice = std::slice::from_raw_parts(ptr, len);
+            std::str::from_utf8(slice)
+        };
+        assert_eq!(s, Ok(truth));
+    }
+
+    #[test]
+    fn main_pointer() {
+        let mut x = 50;
+        let ptr_x = &mut x as *mut i32;
+        let y = Box::new(20);
+        let ptr_y = &*y as *const i32;
+
+        unsafe {
+            *ptr_x += *ptr_y;
+        }
+        assert_eq!(x, 70);
     }
 }
 
