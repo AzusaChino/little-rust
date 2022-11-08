@@ -4,6 +4,7 @@ mod container;
 mod copy_clone;
 mod enums;
 mod extender;
+mod leak;
 mod path_ruler;
 mod smart_pointer;
 
@@ -352,4 +353,61 @@ mod test_traitor {
     }
 
     impl<H, T: HList> HList for HCons<H, T> {}
+}
+
+#[cfg(test)]
+mod tests {
+
+    use std::collections::HashMap;
+    use std::fs::File;
+    use std::io::Read;
+    use std::mem::size_of_val;
+
+    #[test]
+    fn main_read_file() {
+        read_file("./mod.rs").unwrap();
+    }
+
+    fn read_file(name: &str) -> Result<String, std::io::Error> {
+        let mut f = File::open(name)?;
+        let mut contents = String::new();
+        f.read_to_string(&mut contents)?;
+        Ok(contents)
+    }
+
+    #[test]
+    fn main_closure() {
+        let c1 = || println!("hello world!");
+        let c2 = |i: i32| println!("hello {}", i);
+
+        let name = String::from("az");
+        let name_cln = name.clone();
+
+        let mut table = HashMap::new();
+        table.insert("hello", "world");
+
+        // 捕获一个引用，长度为 8
+        let c3 = || println!("hello: {}", name);
+
+        let c4 = move || println!("hello: {}, {:?}", name_cln, table);
+
+        let name_cln2 = name.clone();
+
+        let c5 = move || {
+            let x = 1;
+            let name3 = String::from("lindy");
+            println!("hello {}, {:?}, {:?}", x, name_cln2, name3);
+        };
+
+        println!(
+            "c1: {}, c2: {}, c3: {}, c4: {}, c5: {}, main: {}",
+            size_of_val(&c1),
+            size_of_val(&c2),
+            size_of_val(&c3),
+            size_of_val(&c4),
+            size_of_val(&c5),
+            size_of_val(&main_closure),
+        )
+    }
+
 }
