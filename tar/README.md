@@ -1,3 +1,0 @@
-# Tar
-
-Tarui practice project.
