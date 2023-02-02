@@ -1,5 +1,5 @@
 [workspace]
-members = ["httpie", "miniredis", "practice", "tar", "yui"]
+members = ["miniredis", "practice"]
 
 [profile.release]
 lto = true
