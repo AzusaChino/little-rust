@@ -11,6 +11,7 @@ mod server {
     use std::net::TcpStream;
     use std::sync::{Arc, Mutex};
 
+    #[allow(unused)]
     fn handle_client(mut stream: TcpStream, clients: Arc<Mutex<Vec<TcpStream>>>) {
         let mut buffer = [0; 1024];
         loop {
