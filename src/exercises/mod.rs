@@ -2,9 +2,10 @@ pub mod closures;
 pub mod common;
 pub mod concurrent;
 pub mod io;
-mod lifecycle;
+pub mod lifecycle;
 pub mod pkg;
 pub mod req;
+pub mod string;
 
 mod server {
     use std::io::{Read, Write};
@@ -42,6 +43,57 @@ mod server {
                     println!("Error writing to stream");
                 }
             }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn test_collect() {
+        let _a: Vec<_> = (b'A'..b'z' + 1)
+            .map(|c| c as char)
+            .filter(|c| c.is_alphabetic())
+            .collect();
+        println!("{:?}", _a);
+    }
+
+    #[test]
+    fn test_match() {
+        // match guard
+        enum Temp {
+            C(i32),
+            F(i32),
+        }
+        let t = Temp::C(35);
+        let _t = Temp::F(34);
+        match t {
+            Temp::C(tt) if tt > 30 => println!("{}", tt),
+            Temp::C(tt) => println!("{}", tt),
+            Temp::F(ff) if ff > 86 => println!("{}", ff),
+            Temp::F(ff) => println!("{}", ff),
+        }
+
+        fn age() -> u32 {
+            15
+        }
+        match age() {
+            0 => println!("oops"),
+            // catch arm as variable
+            n @ 1..=12 => println!("{}", n),
+            n @ 13..=19 => println!("{}", n),
+            n => println!("{}", n),
+        }
+
+        fn some_number() -> Option<i32> {
+            Some(1)
+        }
+
+        match some_number() {
+            Some(n @ 1) => println!("{}", n),
+            Some(n) => println!("{},,", n),
+            _ => (),
         }
     }
 }
