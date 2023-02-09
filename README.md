@@ -1,9 +1,5 @@
 # little-rust
 
-starts on 2021.06.01
-
-the path of becoming rusty.
-
 ## Main Content
 
 1. Learn from microsoft [path](https://docs.microsoft.com/en-us/learn/paths/rust-first-steps/)
@@ -78,3 +74,18 @@ fn do_the_thing_better(i:i32) {
     println!("{}", i);
 }
 ```
+
+## Status Track
+
+### Rust Standard Library
+
+- [x] Chapter 01 - Learning the basics
+- [ ] Chapter 02 - Working with collections
+- [ ] Chapter 03 - Handling Files and the fs
+- [ ] Chapter 04 - Serialization
+- [ ] Chapter 05 - Advanced Data Structure
+- [ ] Chapter 06 - Handling Errors
+- [ ] Chapter 07 - Parallelism and Rayon
+- [ ] Chapter 08 - Working with Future
+- [ ] Chapter 09 - Networking
+- [ ] Chapter 09 - Using Experimental Nightly Features

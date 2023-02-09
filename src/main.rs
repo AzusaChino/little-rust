@@ -1,10 +1,11 @@
+#![allow(unused)]
+
 use anyhow::Result;
 use tokio::{
     io::{self, AsyncReadExt, AsyncWriteExt},
     net::{TcpListener, TcpStream},
 };
 
-#[allow(unused)]
 async fn async_sample() {
     println!("I am a async function");
 }
@@ -15,15 +16,20 @@ async fn async_sample() {
 async fn main() -> Result<()> {
     let (tx, rx) = tokio::sync::oneshot::channel();
 
-    tx.send("Bingo").unwrap();
+    tokio::spawn(async move {
+        if let Err(_) = tx.send("msg") {
+            println!("the receiver dropped");
+        }
+    });
 
-    let res = rx.await;
-    println!("Got {:?}", res);
+    match rx.await {
+        Ok(v) => println!("got = {:?}", v),
+        Err(_) => println!("the sender dropped"),
+    }
 
     Ok(())
 }
 
-#[allow(unused)]
 async fn echo_server() -> io::Result<()> {
     let listener = TcpListener::bind("172.0.0.1:6542").await?;
 
@@ -48,7 +54,6 @@ async fn echo_server() -> io::Result<()> {
     }
 }
 
-#[allow(unused)]
 async fn echo_client() -> io::Result<()> {
     let socket = TcpStream::connect("172.0.0.0:6542").await?;
     let (mut rd, mut wr) = io::split(socket);
