@@ -93,5 +93,47 @@ mod tests {
     }
 
     #[test]
-    fn structs() {}
+    fn structs() {
+        let nl = NameLen::new("name");
+        println!("{0}{1}{}{}", nl.name, nl.length);
+    }
+
+    use std::thread;
+
+    #[test]
+    fn parallelism() {
+        let sum = parallel_sum(&[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        println!("{}", sum);
+    }
+
+    fn parallel_sum(range: &[i32]) -> i32 {
+        const NUM_THREADS: usize = 4;
+        if range.len() < NUM_THREADS {
+            sum(range)
+        } else {
+            let bucket_size = range.len();
+            let mut cnt = 0;
+            let mut threads = Vec::new();
+            while cnt + bucket_size < range.len() {
+                let bucket = range[cnt..cnt + bucket_size].to_vec();
+                let th = thread::Builder::new()
+                    .name("calc".to_owned())
+                    .spawn(move || sum(&bucket))
+                    .expect("fail to create thread");
+                threads.push(th);
+                cnt += bucket_size;
+            }
+
+            // left
+            let mut sum = sum(&range[cnt..]);
+            for th in threads {
+                sum += th.join().expect("fail to join thread");
+            }
+            sum
+        }
+    }
+
+    fn sum(range: &[i32]) -> i32 {
+        range.iter().fold(0, |acc, v| acc + *v)
+    }
 }
