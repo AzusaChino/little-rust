@@ -1,4 +1,5 @@
 pub mod closures;
+pub mod collection;
 pub mod common;
 pub mod concurrent;
 pub mod io;
