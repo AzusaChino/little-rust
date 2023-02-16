@@ -155,4 +155,30 @@ mod tests {
         println!("{}", s.to_uppercase());
         println!("{}", s.repeat(3));
     }
+
+    #[test]
+    fn itr() {
+        let names = vec!["joe", "miranda", "alice"];
+
+        let mut iter = names.iter();
+        let mut al = "abcdefg".chars();
+        let _ = 0..=10;
+        let nums = 0..;
+
+        drop(nums);
+
+        for (i, l) in "abc".chars().enumerate() {
+            println!("#{} {}", i + 1, l);
+        }
+
+        if let Some(n) = iter.next() {
+            println!("name is {}", n);
+        }
+
+        let ll = al.nth(3);
+        match ll {
+            Some(ll) => println!("fourth is {}", ll),
+            None => {}
+        }
+    }
 }

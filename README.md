@@ -91,3 +91,7 @@ fn do_the_thing_better(i:i32) {
 - [ ] Chapter 08 - Working with Future
 - [ ] Chapter 09 - Networking
 - [ ] Chapter 10 - Using Experimental Nightly Features
+
+## References
+
+- [clap tutorial](https://docs.rs/clap/latest/clap/_derive/_tutorial/index.html)

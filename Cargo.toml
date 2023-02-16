@@ -17,11 +17,14 @@ path = "src/bin/nixs.rs"
 
 [dependencies]
 anyhow = "1.0"
+base64 = "0.21"
 chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4.1", features = ["derive"] }
 crossbeam = "0.8"
 dashmap = "5.4"
 futures = "0.3"
 itertools = "0.10"
+openssl = "0.10"
 rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"

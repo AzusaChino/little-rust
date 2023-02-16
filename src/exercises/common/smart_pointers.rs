@@ -6,26 +6,6 @@
 
 use std::ops::Deref;
 
-fn main() {
-    // store an i32 value on the heap
-    let b = Box::new(5);
-    println!("{}", b)
-}
-
-// mod _a {
-//     use self::List::{Cons, Nil};
-//
-//     enum List {
-//         Cons(i32, List),
-//         Nil,
-//     }
-//
-//     fn l() {
-//         // indefinite size
-//         let _list = Cons(1, Cons(2, Cons(3, Nil)));
-//     }
-// }
-
 enum Message {
     Quit,
     Move { x: i32, y: i32 },
@@ -396,5 +376,46 @@ mod sp {
             let g = gadget_weak.upgrade().unwrap();
             println!("Gadget {} owned by {}", g.id, g.owner.name);
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn test() {
+        use std::mem::ManuallyDrop;
+        let mut x = ManuallyDrop::new(String::from("Hello World"));
+        x.truncate(5);
+        assert_eq!(*x, "Hello");
+
+        // manually drop
+        unsafe {
+            ManuallyDrop::drop(&mut x);
+        }
+    }
+
+    #[test]
+    fn manually() {
+        use std::ptr;
+        use std::rc::Rc;
+
+        let last = Rc::new(1);
+        let weak = Rc::downgrade(&last);
+
+        let mut v = vec![Rc::new(0), last];
+
+        unsafe {
+            // get a raw pointer to the last element in `v`
+            let ptr = &mut v[1] as *mut _;
+            // shorten `v` to prevent the last item from being droped
+            v.set_len(1);
+
+            ptr::drop_in_place(ptr);
+        }
+
+        assert_eq!(v, &[0.into()]);
+        // ensure the last item was dropped
+        assert!(weak.upgrade().is_none());
     }
 }
