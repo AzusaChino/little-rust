@@ -1,7 +1,7 @@
 [package]
 name = "little_rust"
 version = "0.1.0"
-authors = ["azusachino <azusa146@gmail.com>"]
+authors = ["azusachino <azusachino@duck.com>"]
 edition = "2021"
 readme = "README.md"
 license-file = "LICENSE"
