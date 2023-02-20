@@ -80,7 +80,7 @@ fn do_the_thing_better(i:i32) {
 ### Rust Standard Library
 
 - [x] Chapter 01 - Learning the basics
-- [ ] Chapter 02 - Working with collections
+- [x] Chapter 02 - Working with collections
   - vec
   - string
 - [ ] Chapter 03 - Handling Files and the fs

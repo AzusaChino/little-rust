@@ -1,5 +1,11 @@
 #[cfg(test)]
 mod tests {
+    use std::{
+        collections::{HashMap, HashSet, VecDeque},
+        ops::{Deref, Mul},
+    };
+
+    use itertools::Itertools;
 
     #[test]
     fn vec() {
@@ -179,6 +185,175 @@ mod tests {
         match ll {
             Some(ll) => println!("fourth is {}", ll),
             None => {}
+        }
+
+        // collect iterators into collections
+        let _: Vec<_> = (1..10).collect();
+        let _nums = (1..10).collect::<Vec<_>>();
+
+        // change which items are being iterated over
+        let all_nums = 1..;
+        let nums: Vec<_> = all_nums.take(5).collect();
+        println!("the first five: {:?}", nums);
+
+        let _: Vec<_> = (0..11).skip(2).collect();
+
+        let _: Vec<_> = (0..).take_while(|x| x * x < 50).collect_vec();
+
+        let countries = ["a", "b", "ab", "ac"];
+
+        let _: Vec<_> = countries.iter().filter(|x| x.contains('a')).collect();
+
+        if let Some(c) = countries.iter().find(|ctry| ctry.starts_with('a')) {
+            println!("{}", c);
+        }
+
+        if let Some(id) = countries.iter().position(|cry| cry.ends_with('b')) {
+            println!("{}", id);
+        }
+
+        let _sum: i32 = (1..11).sum();
+        let _pdt: i32 = (1..11).product();
+
+        // combine iterators
+        let _some_numbers: Vec<_> = (1..4).cycle().take(10).collect();
+        let _other: Vec<_> = (1..4).chain(10..14).collect();
+
+        let swiss_postcodes = [8957, 5000, 5034];
+        let swiss_towns = ["Spreitenbach", "Aarau", "Suhr"];
+
+        let _zipped: Vec<_> = swiss_postcodes.iter().zip(swiss_towns.iter()).collect();
+        println!("{:?}", _zipped);
+
+        // zip is lazy, use two infine ranges
+        let _: Vec<_> = (b'A'..)
+            .zip(1..)
+            .take(10)
+            .map(|(ch, num)| (ch as char, num))
+            .collect();
+    }
+
+    // FIFO queue
+    #[test]
+    fn vec_deque() {
+        let mut orders = VecDeque::new();
+        orders.push_back("oysters");
+        orders.push_back("fish and chips");
+
+        if let Some(pp) = orders.pop_front() {
+            println!("{}", pp);
+        }
+
+        let mut some_queue = VecDeque::with_capacity(5usize);
+        some_queue.push_back(1);
+        some_queue.push_back(2);
+        some_queue.push_back(3);
+        some_queue.push_back(4);
+        some_queue.push_back(5);
+
+        some_queue.swap_remove_back(2);
+        println!("{:?}", some_queue);
+
+        some_queue.swap_remove_front(2);
+        println!("{:?}", some_queue);
+    }
+
+    #[test]
+    fn hash_map() {
+        let mut mp = HashMap::new();
+        mp.insert("1", 1);
+
+        for (k, v) in &mp {
+            println!("{}: {}", k, v);
+        }
+
+        mp.entry("2").and_modify(|v| *v *= 10).or_insert(2);
+    }
+
+    #[test]
+    fn hash_set() {
+        let one_five: HashSet<_> = (1..=5).collect();
+        let five_ten: HashSet<_> = (5..=10).collect();
+        let one_ten: HashSet<_> = (1..=10).collect();
+
+        let is_disjoint = one_five.is_disjoint(&five_ten);
+        println!("{}", is_disjoint);
+
+        let _ = one_five.is_subset(&one_ten);
+
+        let _dif = one_five.difference(&five_ten);
+
+        let _ = one_five.intersection(&five_ten);
+    }
+
+    struct Fibonacci {
+        cur: u32,
+        next: u32,
+    }
+
+    impl Default for Fibonacci {
+        fn default() -> Self {
+            Self {
+                cur: Default::default(),
+                next: 1,
+            }
+        }
+    }
+
+    impl Iterator for Fibonacci {
+        type Item = u32;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            let old = self.cur;
+            self.cur = self.next;
+            self.next += old;
+            Some(old)
+        }
+    }
+
+    #[test]
+    fn fib_itr() {
+        let fib: Vec<_> = Fibonacci::default().take(10).collect();
+        println!("{:?}", fib);
+    }
+
+    struct SquaredVec<T>
+    where
+        T: Mul + Copy,
+    {
+        vec: Vec<T::Output>,
+    }
+
+    impl<T> SquaredVec<T>
+    where
+        T: Mul + Copy,
+    {
+        fn new() -> Self {
+            Self { vec: Vec::new() }
+        }
+        fn push(&mut self, item: T) {
+            self.vec.push(item * item);
+        }
+    }
+
+    impl<T> Deref for SquaredVec<T>
+    where
+        T: Mul + Copy,
+    {
+        type Target = [T::Output];
+
+        fn deref(&self) -> &Self::Target {
+            &self.vec
+        }
+    }
+
+    #[test]
+    fn sq_itr() {
+        let mut sq = SquaredVec::new();
+        sq.push(1);
+        sq.push(2);
+        for (i, n) in sq.iter().enumerate() {
+            println!("{},{}", i + 1, n);
         }
     }
 }

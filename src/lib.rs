@@ -6,6 +6,7 @@ mod demo;
 mod deps;
 pub mod exercise;
 mod exercises;
+mod mem;
 pub mod thread_pool;
 pub mod ui;
 
