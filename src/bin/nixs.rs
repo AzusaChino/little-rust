@@ -54,7 +54,7 @@ mod macos {
 
     impl Fork for Handler {
         fn try_fork() {
-            unimplemented!("wait for windows");
+            println!("try fork child-process in macos");
         }
     }
 }
