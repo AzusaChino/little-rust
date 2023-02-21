@@ -18,6 +18,7 @@ path = "src/bin/nixs.rs"
 [dependencies]
 anyhow = "1.0"
 base64 = "0.21"
+byteorder = "1.4"
 chrono = { version = "0.4", features = ["serde"] }
 clap = { version = "4.1", features = ["derive"] }
 crossbeam = "0.8"
@@ -35,3 +36,5 @@ lazy_static = "1.4"
 reqwest = { version = "0.11", features = ["blocking"] }
 html2md = "0.2"
 regex = "1.7"
+walkdir = "2.3"
+glob = "0.3"

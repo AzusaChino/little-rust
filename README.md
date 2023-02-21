@@ -83,7 +83,7 @@ fn do_the_thing_better(i:i32) {
 - [x] Chapter 02 - Working with collections
   - vec
   - string
-- [ ] Chapter 03 - Handling Files and the fs
+- [x] Chapter 03 - Handling Files and the fs
 - [ ] Chapter 04 - Serialization
 - [ ] Chapter 05 - Advanced Data Structure
 - [ ] Chapter 06 - Handling Errors
