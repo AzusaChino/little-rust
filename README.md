@@ -84,8 +84,9 @@ fn do_the_thing_better(i:i32) {
   - vec
   - string
 - [x] Chapter 03 - Handling Files and the fs
-- [ ] Chapter 04 - Serialization
+- [x] Chapter 04 - Serialization
 - [ ] Chapter 05 - Advanced Data Structure
+  - work with lazy_static
 - [ ] Chapter 06 - Handling Errors
 - [ ] Chapter 07 - Parallelism and Rayon
 - [ ] Chapter 08 - Working with Future
