@@ -1,3 +1,13 @@
+use std::{
+    io::Write,
+    sync::{
+        mpsc::{self, Receiver},
+        Arc, Mutex,
+    },
+    thread::{self, JoinHandle},
+    time::Duration,
+};
+
 use anyhow::Result;
 use clap::Parser;
 
@@ -28,7 +38,64 @@ async fn main() -> Result<()> {
         Err(_) => println!("the sender dropped"),
     }
 
+    run();
+
     Ok(())
+}
+
+const MAX_THREADS: usize = 5;
+
+fn run() {
+    let (tx, rx) = mpsc::sync_channel(1024);
+    let shared_rx = Arc::new(Mutex::new(rx));
+    let mut buf = String::new();
+    for i in 1..=MAX_THREADS {
+        create_thread(i, shared_rx.clone());
+    }
+
+    loop {
+        std::io::stdout().flush().expect("fail to flush");
+        let console = std::io::stdin().read_line(&mut buf);
+        match console {
+            Ok(_) => {
+                match buf.trim().split(' ').collect::<Vec<&str>>()[..] {
+                    [] | [_] => {
+                        println!("unrecognized command");
+                    }
+                    ["restart", id] => {
+                        println!("restarting {id}");
+                        let id = id.trim().parse::<usize>().unwrap();
+                        tx.send(id).unwrap();
+                        create_thread(id, shared_rx.clone());
+                    }
+                    [_, ..] => {
+                        println!("unrecognized command");
+                    }
+                }
+                buf.clear()
+            }
+            Err(ref error) => {
+                println!("Error: {error}");
+            }
+        }
+    }
+}
+
+fn create_thread(id: usize, receptor: Arc<Mutex<Receiver<usize>>>) -> JoinHandle<()> {
+    thread::spawn(move || {
+        let t_id = id;
+        loop {
+            if let Ok(num) = receptor.lock().expect("fail to get lock").try_recv() {
+                println!("received: {num}, id: {id} = {}", num == t_id);
+                if num == t_id {
+                    println!("oops, exiting!");
+                    break;
+                }
+                println!("thread {id} alive");
+                thread::sleep(Duration::from_millis(500));
+            }
+        }
+    })
 }
 
 #[cfg(test)]
