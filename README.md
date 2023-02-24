@@ -85,8 +85,9 @@ fn do_the_thing_better(i:i32) {
   - string
 - [x] Chapter 03 - Handling Files and the fs
 - [x] Chapter 04 - Serialization
-- [ ] Chapter 05 - Advanced Data Structure
+- [x] Chapter 05 - Advanced Data Structure
   - work with lazy_static
+  - RefCell: a wrapper around any type that moves the borrow checker's rule enforcement from compile time to runtime
 - [ ] Chapter 06 - Handling Errors
 - [ ] Chapter 07 - Parallelism and Rayon
 - [ ] Chapter 08 - Working with Future

@@ -1,31 +1,6 @@
-use std::path::PathBuf;
-
-#[derive(Copy, Clone, Debug)]
-pub enum Mode {
-    Compile,
-    Test,
-    Clippy,
-}
-
-pub struct ExerciseList {
-    pub exercises: Vec<Exercise>,
-}
-
-#[derive(Debug)]
-pub struct Exercise {
-    pub name: String,
-    pub path: PathBuf,
-    pub mode: Mode,
-    pub hint: String,
-}
-
-pub fn do_me_a_favor() {
-    println!("do me a favor");
-}
-
 #[cfg(test)]
 mod tests {
-    use std::process::{self};
+    use std::process;
 
     const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
     const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
