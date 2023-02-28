@@ -90,9 +90,9 @@ fn do_the_thing_better(i:i32) {
   - RefCell: a wrapper around any type that moves the borrow checker's rule enforcement from compile time to runtime
 - [x] Chapter 06 - Handling Errors
 - [x] Chapter 07 - Parallelism and Rayon
-- [ ] Chapter 08 - Working with Future
-- [ ] Chapter 09 - Networking
-- [ ] Chapter 10 - Using Experimental Nightly Features
+- [x] Chapter 08 - Working with Future
+- [x] Chapter 09 - Networking
+- [x] Chapter 10 - Using Experimental Nightly Features
 
 ## References
 
