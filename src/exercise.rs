@@ -7,13 +7,13 @@ mod tests {
     const CONTEXT: usize = 2;
 
     fn sum(data: Vec<u32>) -> u32 {
-        data.iter().fold(0, |acc, x| acc + x)
+        data.iter().sum()
     }
 
     fn sum_ref(data: &Vec<u32>) -> u32 {
         // 值的地址会改变么？引用的地址会改变么？
         println!("addr of value: {:p}, addr of ref: {:p}", data, &data);
-        data.iter().fold(0, |acc, x| acc + x)
+        data.iter().sum()
     }
 
     // generate a temporary file name that is hopefully unique

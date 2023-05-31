@@ -52,7 +52,7 @@ mod tests {
         println!("{}", favor);
 
         let d = Demo {};
-        println!("{}", format!("{} is demo?", d));
+        println!("{} is demo?", d);
 
         let ddg = format!("{0}, {0}, {1}", "duck", "goose");
         let intro = format!(
@@ -63,8 +63,8 @@ mod tests {
 
         println!("{} {}", ddg, intro);
 
-        println!("{}", format!("{1} {} {0} {}", "a", "b"));
-        println!("{}", format!("{:.*}", 2, 1.123435));
+        println!("{1} {} {0} {}", "a", "b");
+        println!("{:.*}", 2, 1.123435);
     }
 
     #[test]

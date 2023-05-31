@@ -66,8 +66,8 @@ mod tests {
         }
     }
     impl Sleep {
-        fn sleep(self) -> impl Future<Output = ()> {
-            async move { tokio::time::sleep(std::time::Duration::from_secs(self.0)).await }
+        async fn sleep(self) {
+            async move { tokio::time::sleep(std::time::Duration::from_secs(self.0)).await };
         }
     }
 

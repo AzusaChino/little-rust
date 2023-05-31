@@ -28,7 +28,7 @@ async fn main() -> Result<()> {
     let (tx, rx) = tokio::sync::oneshot::channel();
 
     tokio::spawn(async move {
-        if let Err(_) = tx.send("msg") {
+        if tx.send("msg").is_err() {
             println!("the receiver dropped");
         }
     });

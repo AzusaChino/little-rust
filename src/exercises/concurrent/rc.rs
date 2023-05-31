@@ -34,7 +34,7 @@ mod tests {
         }
 
         pub fn get_downstream(&self) -> Option<Rc<Node>> {
-            self.downstream.as_ref().map(|v| v.clone())
+            self.downstream.as_ref().cloned()
         }
     }
 
@@ -42,7 +42,7 @@ mod tests {
     fn rc_test() {
         let a = Rc::new(1u64);
         let b = a.clone();
-        let c = a.clone();
+        let c = a;
 
         let _ = b.is_power_of_two();
         let _ = c.leading_ones();
@@ -107,7 +107,7 @@ mod test2 {
             self.downstream = Some(downstream);
         }
         pub fn get_downstream(&self) -> Option<Rc<RefCell<Node>>> {
-            self.downstream.as_ref().map(|v| v.clone())
+            self.downstream.as_ref().cloned()
         }
     }
 
@@ -144,7 +144,7 @@ mod lifecycle_tests {
         }
     }
 
-    fn strtok<'b, 'a>(s: &'b mut &'a str, delimiter: char) -> &'a str {
+    fn strtok<'a>(s: &mut &'a str, delimiter: char) -> &'a str {
         if let Some(i) = s.find(delimiter) {
             let prefix = &s[..i];
             let suffix = &s[(i + delimiter.len_utf8())..];

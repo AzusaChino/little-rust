@@ -3,8 +3,6 @@
 #[allow(dead_code)]
 #[cfg(test)]
 mod tests {
-
-    use lazy_static::lazy_static;
     use std::collections::HashMap;
     use std::sync::{Arc, Mutex};
     use std::thread;
@@ -24,7 +22,7 @@ mod tests {
 
     #[test]
     fn boxi() {
-        let mut boxed_obj = Box::new(UserSample::default());
+        let mut boxed_obj = Box::<UserSample>::default();
         boxed_obj.username = String::from("username");
         boxed_obj.password = "password".to_string();
         drop(boxed_obj)
@@ -203,16 +201,6 @@ mod tests {
         }
     }
 
-    // mutex_guard
-
-    // lazy_static 宏可以生成复杂的 static 对象
-    lazy_static! {
-    // 一般情况下 Mutex 和 Arc 一起在多线程环境下提供对共享内存的使用
-    // 如果你把 Mutex 声明成 static，其生命周期是静态的，不需要 Arc
-    static ref METRICS: Mutex<HashMap<Cow<'static, str>, usize>> =
-    Mutex::new(HashMap::new());
-    }
-
     #[test]
     fn main_mutex_guard() {
         let metrics: Arc<Mutex<HashMap<Cow<'static, str>, usize>>> =
@@ -265,9 +253,8 @@ mod tests {
         // 数组虽没有实现 Deref，但它的解引用就是 &[T]
         print_slice(&arr);
         print_slice(&arr[..]);
-        print_slice_ref(&arr);
-        print_slice_ref(&arr[..]);
         print_slice_ref(arr);
+        print_slice_ref(&arr[..]);
     }
 
     #[test]

@@ -45,7 +45,7 @@ impl Default for Matrix {
 
 #[test]
 fn main() {
-    let data = Box::new(Matrix::default());
+    let data = Box::<Matrix>::default();
     // 输出中有一个 1024 大小的内存分配，是 println! 导致的
     println!(
         "!!! allocated memory: {:p}, len: {}",

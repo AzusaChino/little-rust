@@ -6,16 +6,16 @@ mod unsafety;
 
 #[cfg(test)]
 mod rsa {
-    use std::{fs::File, io::Read};
     use anyhow::Result;
     use base64::Engine;
     use openssl::rsa::{Padding, Rsa};
+    use std::{fs::File, io::Read};
 
     #[test]
     pub fn rsa_sample() -> Result<()> {
         let mut f = File::open("secret.pem")?;
-        let mut buf: Vec<u8> = Vec::with_capacity(10 * 1024);
-        f.read(&mut buf)?;
+        let mut buf: Vec<u8> = vec![0; 10 * 1024];
+        f.read_exact(&mut buf)?;
         let secret = "big secret".to_owned();
         let rsa = Rsa::public_key_from_pem(&buf[..])?;
         let mut buf: Vec<u8> = vec![0; rsa.size() as usize];

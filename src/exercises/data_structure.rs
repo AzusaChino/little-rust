@@ -1,81 +1,36 @@
 #[cfg(test)]
 mod tests {
-    extern crate lazy_static;
     extern crate regex;
-
-    // created only the first time it is used
-    use lazy_static::lazy_static;
-    use regex::Regex;
-    use std::{collections::HashMap, fmt::Display, ops::MulAssign, sync::RwLock};
-
-    // global static immutable
-    lazy_static! {
-        static ref CURRENCIES: HashMap<&'static str, &'static str> = {
-            let mut m = HashMap::new();
-            m.insert("EUR", "Euro");
-            m.insert("USD", "U.S. Dollar");
-            m.insert("CNY", "RMB");
-            m
-        };
-    }
-
-    // global static mutable
-    lazy_static! {
-        static ref CLIENTS: RwLock<Vec<String>> = RwLock::new(Vec::new());
-    }
-
-    // local static
-    fn extract_day(date: &str) -> Option<&str> {
-        lazy_static! {
-            static ref RE: Regex =
-                Regex::new(r"(\d{2}).(\d{2}).(\d{4})").expect("fail to create regex");
-        }
-
-        RE.captures(date)
-            .and_then(|cap| cap.get(1).map(|day| day.as_str()))
-    }
-
-    #[test]
-    fn lazy() {
-        let usd = CURRENCIES.get("USD");
-        if let Some(usd) = usd {
-            println!("{}", usd);
-        }
-
-        // mutate the global
-        CLIENTS
-            .write()
-            .expect("fail to unlock clients for writing")
-            .push("192.168.0.1".to_owned());
-
-        let clients = CLIENTS.read().expect("fail to get read lock");
-        println!("{}", clients.get(0).expect("fail to get first"));
-
-        let date = "12.01.2018";
-        if let Some(day) = extract_day(date) {
-            println!("{}", day);
-        }
-    }
+    use once_cell::sync::Lazy;
+    use std::{collections::HashMap, sync::Mutex};
+    use std::{fmt::Display, ops::MulAssign};
 
     extern crate bitflags;
 
+    static GLOBAL_DATA: Lazy<Mutex<HashMap<i32, String>>> = Lazy::new(|| {
+        let mut m = HashMap::new();
+        m.insert(13, "Spica".to_owned());
+        m.insert(74, "Hoyten".to_owned());
+        Mutex::new(m)
+    });
+
     bitflags::bitflags! {
         struct Spices: u32 {
+            const NONE = 0b0000_0000;
             const SALT = 0b0000_0001;
             const PEPPER = 0b0000_0010;
             const CHILI = 0b0000_0100;
             const SAFFRON = 0b0000_1000;
-            const ALL = Self::SALT.bits
-            |Self::PEPPER.bits
-            |Self::CHILI.bits
-            |Self::SAFFRON.bits;
+            const ALL = Self::SALT.bits()
+            |Self::PEPPER.bits()
+            |Self::CHILI.bits()
+            |Self::SAFFRON.bits();
         }
     }
 
-    impl Spices {
-        pub fn clear(&mut self) -> &mut Self {
-            self.bits = 0;
-            self
+    impl std::fmt::Debug for Spices {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            f.debug_tuple("Spices").field(&self.0).finish()
         }
     }
 
@@ -101,8 +56,6 @@ mod tests {
 
         custom.remove(Spices::SALT);
         println!("{:?}", custom);
-
-        custom.clear();
     }
 
     #[derive(Debug)]
@@ -149,6 +102,8 @@ mod tests {
         let _: DoubleVec<i32> = vec.clone().into();
         let dv: DoubleVec<i32> = vec[..].into();
         print_elm(dv.as_ref());
+
+        GLOBAL_DATA.is_poisoned();
     }
 
     fn print_elm<T>(slc: &[T])
@@ -233,9 +188,8 @@ mod tests {
 
         println!("{:?}", root);
 
-        let mut zoo: Vec<Box<dyn Animal>> = Vec::new();
-        zoo.push(Box::new(Dog::default()));
-        zoo.push(Box::new(Cat::default()));
+        // convert to vec!
+        let zoo: Vec<Box<dyn Animal>> = vec![Box::<Dog>::default(), Box::<Cat>::default()];
         println!("{:?}", zoo);
     }
 }

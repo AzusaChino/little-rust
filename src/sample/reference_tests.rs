@@ -178,14 +178,14 @@ mod tests {
 
         thread::spawn(move || {
             thread::sleep(Duration::from_secs(1));
-            let &(ref lock, ref cvar) = &*p2;
+            let (lock, cvar) = &*p2;
             let mut started = lock.lock().unwrap();
             *started = true;
             cvar.notify_one();
             println!("child thread {}", *started);
         });
 
-        let &(ref lock, ref cvar) = &*pair;
+        let (lock, cvar) = &*pair;
         let mut started = lock.lock().unwrap();
 
         println!("before wait {}", *started);

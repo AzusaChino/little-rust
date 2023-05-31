@@ -124,9 +124,9 @@ mod tests {
                     .duration_since(UNIX_EPOCH)
                     .expect("fail to generate timestamp");
 
-                write!(
+                writeln!(
                     writer,
-                    "{} {} at {}: {}\n",
+                    "{} {} at {}: {}",
                     record.level(),
                     timestamp.as_secs(),
                     record.target(),

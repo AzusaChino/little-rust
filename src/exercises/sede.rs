@@ -37,8 +37,8 @@ mod tests {
             .from_writer(BufWriter::new(File::open(".")?));
         let mut wtr = csv::Writer::from_writer(writer);
 
-        wtr.write_record(&["name", "radius", "distance_from_sun", "gravity"])?;
-        wtr.write_record(&["Mercury", "0.38", "0.47", "0.38"])?;
+        wtr.write_record(["name", "radius", "distance_from_sun", "gravity"])?;
+        wtr.write_record(["Mercury", "0.38", "0.47", "0.38"])?;
         Ok(())
     }
 

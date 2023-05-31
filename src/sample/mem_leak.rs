@@ -26,12 +26,12 @@ mod first_version {
         let mut node1 = Box::new(Node { next: None });
         let mut node2 = Box::new(Node { next: None });
         node1.next = Some(node2);
-        match node1.next {
-            // use of partially moved value `node1` ↓
-            // Some(mut n) => n.next = Some(node1),
-            Some(mut n) => {}
-            None => {}
-        }
+        // use of partially moved value `node1` ↓
+        // Some(mut n) => n.next = Some(node1),
+        // match node1.next {
+        //     Some(mut n) => {}
+        //     None => {}
+        // }
     }
 }
 
@@ -103,6 +103,6 @@ mod third_version {
         let mut node3 = Rc::new(RefCell::new(Node::new()));
         node1.borrow_mut().next = Some(node2.clone());
         node2.borrow_mut().next = Some(node3.clone());
-        node3.borrow_mut().next = Some(node1.clone());
+        node3.borrow_mut().next = Some(node1);
     }
 }

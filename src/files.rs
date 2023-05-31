@@ -53,7 +53,7 @@ mod tests {
         println!("before: {}", file_content);
 
         // using pos to seek
-        let pos = r_buf.seek(SeekFrom::Current(0))?;
+        let pos = r_buf.stream_position()?;
         w_buf.write_all(content.as_bytes())?;
         w_buf.flush()?;
 
@@ -208,10 +208,8 @@ mod tests {
 
     #[test]
     fn fs() {
-        for entry in WalkDir::new(".") {
-            if let Ok(entry) = entry {
-                println!("{}", entry.path().display());
-            }
+        for entry in WalkDir::new(".").into_iter().flatten() {
+            println!("{}", entry.path().display());
         }
 
         WalkDir::new("./src/bin")
@@ -224,7 +222,7 @@ mod tests {
 
         WalkDir::new("./src")
             .into_iter()
-            .filter_entry(|entry| is_dir(entry))
+            .filter_entry(is_dir)
             .filter_map(Result::ok)
             .for_each(|entry| {
                 println!("{}", entry.file_name().to_string_lossy());
@@ -266,10 +264,11 @@ mod tests {
             ..Default::default()
         };
 
-        for entry in glob_with("*Ferris[!_]*", options).expect("fail to read glob pattern") {
-            if let Ok(path) = entry {
-                println!("{:?}", path.display());
-            }
+        for entry in glob_with("*Ferris[!_]*", options)
+            .expect("fail to read glob pattern")
+            .flatten()
+        {
+            println!("{:?}", entry.display());
         }
     }
 }

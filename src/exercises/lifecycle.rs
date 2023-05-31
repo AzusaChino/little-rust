@@ -50,7 +50,7 @@ mod tests {
         println!("buf to die: {:?}", buf);
 
         // 这里不用特意 drop，写出来只是为了说明 Copy 出来的 buf 被 Drop 了
-        drop(buf)
+        // drop(buf)
     }
 
     #[test]
