@@ -1,6 +1,5 @@
 mod btree;
 
-mod car;
 mod ch;
 mod closure;
 mod col;
@@ -26,6 +25,4 @@ mod vector;
 
 pub use future::Delay;
 
-// only expose one struct
-pub use car::{Age, Car, Color, Transmission};
 pub use hash_map_usage::process_or_default;

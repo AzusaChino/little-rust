@@ -1,44 +1,19 @@
-use std::path::PathBuf;
-
-#[derive(Copy, Clone, Debug)]
-pub enum Mode {
-    Compile,
-    Test,
-    Clippy,
-}
-
-pub struct ExerciseList {
-    pub exercises: Vec<Exercise>,
-}
-
-#[derive(Debug)]
-pub struct Exercise {
-    pub name: String,
-    pub path: PathBuf,
-    pub mode: Mode,
-    pub hint: String,
-}
-
-pub fn do_me_a_favor() {
-    println!("do me a favor");
-}
-
 #[cfg(test)]
 mod tests {
-    use std::process::{self};
+    use std::process;
 
     const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
     const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
     const CONTEXT: usize = 2;
 
     fn sum(data: Vec<u32>) -> u32 {
-        data.iter().fold(0, |acc, x| acc + x)
+        data.iter().sum()
     }
 
     fn sum_ref(data: &Vec<u32>) -> u32 {
         // 值的地址会改变么？引用的地址会改变么？
         println!("addr of value: {:p}, addr of ref: {:p}", data, &data);
-        data.iter().fold(0, |acc, x| acc + x)
+        data.iter().sum()
     }
 
     // generate a temporary file name that is hopefully unique

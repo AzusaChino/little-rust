@@ -2,10 +2,15 @@ pub mod closures;
 pub mod collection;
 pub mod common;
 pub mod concurrent;
+mod data_structure;
+mod err;
+mod futures;
 pub mod io;
 pub mod lifecycle;
+mod para;
 pub mod pkg;
 pub mod req;
+mod sede;
 pub mod string;
 
 mod server {
@@ -40,7 +45,7 @@ mod server {
             };
 
             for client in clients.iter_mut() {
-                if let Err(_) = client.write(&buffer[..bytes_read]) {
+                if client.write(&buffer[..bytes_read]).is_err() {
                     println!("Error writing to stream");
                 }
             }
@@ -169,11 +174,11 @@ mod tests {
 
         // cwd
         let root = std::path::Path::new("/");
-        env::set_current_dir(&root).expect("fail to set cwd");
+        env::set_current_dir(root).expect("fail to set cwd");
         println!("cwd is {:?}", env::current_dir().expect("fail to read cwd"));
     }
 
-    fn print_env_var<'a>(key: &'a str) {
+    fn print_env_var(key: &str) {
         match env::var(key) {
             Ok(k) => println!("{}: {}", key, k),
             Err(e) => println!("error, {:?}", e),
@@ -190,7 +195,7 @@ mod tests {
 
         println!("your name is {}", name);
 
-        fn print_single_line<'a>(txt: &'a str) {
+        fn print_single_line(txt: &str) {
             print!("{}", txt);
             // flush to guarantee display
             io::stdout().flush().expect("fail to flush output");

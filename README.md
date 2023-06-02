@@ -83,14 +83,16 @@ fn do_the_thing_better(i:i32) {
 - [x] Chapter 02 - Working with collections
   - vec
   - string
-- [ ] Chapter 03 - Handling Files and the fs
-- [ ] Chapter 04 - Serialization
-- [ ] Chapter 05 - Advanced Data Structure
-- [ ] Chapter 06 - Handling Errors
-- [ ] Chapter 07 - Parallelism and Rayon
-- [ ] Chapter 08 - Working with Future
-- [ ] Chapter 09 - Networking
-- [ ] Chapter 10 - Using Experimental Nightly Features
+- [x] Chapter 03 - Handling Files and the fs
+- [x] Chapter 04 - Serialization
+- [x] Chapter 05 - Advanced Data Structure
+  - work with lazy_static
+  - RefCell: a wrapper around any type that moves the borrow checker's rule enforcement from compile time to runtime
+- [x] Chapter 06 - Handling Errors
+- [x] Chapter 07 - Parallelism and Rayon
+- [x] Chapter 08 - Working with Future
+- [x] Chapter 09 - Networking
+- [x] Chapter 10 - Using Experimental Nightly Features
 
 ## References
 

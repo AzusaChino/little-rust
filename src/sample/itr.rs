@@ -27,8 +27,8 @@ mod test {
 
     #[test]
     fn main() {
-        let mut seq = Seq::new();
-        while let Some(i) = seq.next() {
+        let seq = Seq::new();
+        for i in seq {
             println!("{}", i);
         }
     }
@@ -36,13 +36,13 @@ mod test {
     #[test]
     fn m() {
         let v = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
-        let mut iter = v
+        let iter = v
             .iter()
             .take(5)
             .filter(|&x| x % 2 == 0)
             .map(|&x| x * x)
             .enumerate();
-        while let Some((i, v)) = iter.next() {
+        for (i, v) in iter {
             println!("{}, {}", i, v);
         }
     }

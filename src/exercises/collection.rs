@@ -53,7 +53,7 @@ mod tests {
 
         // Filter in place
         let mut names = vec!["Aaron", "Felicia", "Alex", "Daniel"];
-        names.retain(|name| name.starts_with("A"));
+        names.retain(|name| name.starts_with('A'));
         println!("{:?}", names);
         println!("{}", names.contains(&"Alex"));
 
@@ -112,7 +112,7 @@ mod tests {
             println!("\t {}.", line);
         }
 
-        for s in "Never:Give:Up".split(":") {
+        for s in "Never:Give:Up".split(':') {
             println!("{}", s);
         }
 
@@ -121,7 +121,7 @@ mod tests {
         println!("{:?}", s);
 
         // eliminate the empty strings at the end by using split_termitor
-        let s: Vec<_> = "Mr.T.".split_terminator(".").collect();
+        let s: Vec<_> = "Mr.T.".split_terminator('.').collect();
         println!("{:?}", s);
 
         // split at numeric
@@ -169,9 +169,8 @@ mod tests {
         let mut iter = names.iter();
         let mut al = "abcdefg".chars();
         let _ = 0..=10;
-        let nums = 0..;
 
-        drop(nums);
+        // drop(nums);
 
         for (i, l) in "abc".chars().enumerate() {
             println!("#{} {}", i + 1, l);
@@ -182,9 +181,8 @@ mod tests {
         }
 
         let ll = al.nth(3);
-        match ll {
-            Some(ll) => println!("fourth is {}", ll),
-            None => {}
+        if let Some(ll) = ll {
+            println!("fourth is {}", ll);
         }
 
         // collect iterators into collections

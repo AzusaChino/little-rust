@@ -139,7 +139,7 @@ mod tests {
     fn use_vec() {
         let frs = vec!["banana", "apple", "orange", "kiwi"];
 
-        let first = frs.get(0);
+        let first = frs.first();
         println!("{:?}", first);
 
         // pick the 99th item, which is non-existent:
@@ -258,13 +258,14 @@ mod tests {
         ];
 
         // 用for-loop找出薪水最多的人
-        let mut e = &v[0];
-        for i in 0..v.len() {
-            if *e < v[i] {
-                e = &v[i];
+        let mut max = &v[0];
+        for e in &v {
+            if e > max {
+                max = e;
             }
         }
-        println!("max = {:?}", e);
+ 
+        println!("max = {:?}", max);
         // 使用标准的方法
         println!("min = {:?}", v.iter().min().unwrap());
         println!("max = {:?}", v.iter().max().unwrap());

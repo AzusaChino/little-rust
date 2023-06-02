@@ -44,8 +44,8 @@ fn main() {
 
     println!(
         "size of p_duck {}, size of p_bird {}",
-        mem::size_of_val(&p_duck),
-        mem::size_of_val(&p_bird),
+        mem::size_of_val(p_duck),
+        mem::size_of_val(p_bird),
     );
 
     let duck_fly: usize = Duck::fly as usize;

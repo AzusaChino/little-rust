@@ -14,7 +14,7 @@ mod test_reader {
     use std::io::{BufReader, Read, Result};
 
     const fn init_len() -> usize {
-        return 5;
+        5
     }
 
     struct MyReader<R> {
@@ -76,12 +76,16 @@ mod test_reader {
 
         let mut v = vec![1, 2, 3, 4, 5];
         let mut vc = v.clone();
-        loop {
-            match v.pop() {
-                Some(x) => println!("{}", x),
-                None => break,
-            }
+        while let Some(x) = v.pop() {
+            println!("{}", x);
         }
+        // while let is efficient than loop
+        // loop {
+        //     match v.pop() {
+        //         Some(x) => println!("{}", x),
+        //         None => break,
+        //     }
+        // }
 
         while let Some(x) = vc.pop() {
             println!("{}", x);
@@ -322,7 +326,7 @@ mod test_traitor {
                 None => {
                     let s = (*self.s).trim();
                     *self.s = "";
-                    if s.len() == 0 {
+                    if s.is_empty() {
                         None
                     } else {
                         Some(s)
@@ -409,5 +413,4 @@ mod tests {
             size_of_val(&main_closure),
         )
     }
-
 }

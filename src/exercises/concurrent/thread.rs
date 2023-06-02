@@ -63,7 +63,7 @@ mod thd {
     }
 
     fn create_handle(f: fn()) -> JoinHandle<()> {
-        return thread::spawn(move || f());
+        thread::spawn(f)
     }
 
     fn move_c() {

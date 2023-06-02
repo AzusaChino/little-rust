@@ -42,8 +42,6 @@ mod tests {
 
     use std::collections::{BTreeMap, BinaryHeap, HashMap};
 
-    use lazy_static::__Deref;
-
     #[test]
     fn main_bh() {
         let mut heap = BinaryHeap::new();
@@ -69,8 +67,6 @@ mod tests {
 
         let v2 = b1.into_vec();
         println!("cap should be exactly 5: {}", v2.capacity());
-
-        assert!(b2.deref() == v2);
 
         // Box<T> 可以更改内部数据，无法push
         b2[0] = 2;
