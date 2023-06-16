@@ -4,6 +4,26 @@
 mod tests {
     use sled::IVec;
 
+    trait KeyGetter {
+        fn get_key(&self) -> Vec<u8>;
+    }
+
+    #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
+    struct UserConfig {
+        id: u64,
+        name: String,
+        age: u8,
+        config: Vec<u8>,
+        explanation: Option<String>,
+        new_name: Option<String>,
+    }
+
+    impl KeyGetter for UserConfig {
+        fn get_key(&self) -> Vec<u8> {
+            self.id.to_string().as_bytes().to_vec()
+        }
+    }
+
     #[test]
     fn test_sled_basic_ops() {
         sled_basic_ops().unwrap();
@@ -49,6 +69,31 @@ mod tests {
         new.import(export);
 
         assert_eq!(old.checksum()?, new.checksum()?);
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_run_sled_with_obj() {
+        run_sled_with_obj().unwrap();
+    }
+
+    fn run_sled_with_obj() -> anyhow::Result<()> {
+        let db: sled::Db = sled::open("db/userconfig")?;
+        let user = UserConfig {
+            id: 1,
+            name: "user1".to_string(),
+            age: 18,
+            config: vec![1, 2, 3],
+            explanation: None,
+            new_name: None,
+        };
+        let key = user.get_key();
+        // let user_bytes = serde_json::to_string(&user)?;
+        // db.insert(&key, user_bytes.as_bytes())?;
+
+        let new_user = serde_json::from_slice::<UserConfig>(&db.get(key)?.unwrap())?;
+        println!("new_user: {:?}", new_user);
 
         Ok(())
     }

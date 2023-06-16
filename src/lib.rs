@@ -4,6 +4,7 @@ mod deps;
 mod exercise;
 mod exercises;
 mod files;
+mod grpc;
 mod mem;
 mod sample;
 mod ui;
