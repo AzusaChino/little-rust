@@ -6,6 +6,7 @@ edition = "2021"
 readme = "README.md"
 license-file = "LICENSE"
 repository = "https://github.com/azusachino/little-rust"
+build = "build.rs"
 
 [[bin]]
 name = "toki"
@@ -17,17 +18,32 @@ path = "src/bin/nixs.rs"
 
 [dependencies]
 anyhow = "1.0"
+thiserror = "1.0"
+
+# web server
+axum = "0.6"
+
+# image
+image = "0.24"
+
+# utils
+lru = "0.10"
+percent-encoding = "2"
+
+# photo process
+photon-rs = "0.3"
+
 bytes = "1.4"
 base64 = "0.21"
 byteorder = "1.4"
 chrono = { version = "0.4", features = ["serde"] }
-clap = { version = "4.1", features = ["derive"] }
+clap = { version = "4.3", features = ["derive"] }
 crossbeam = "0.8"
 dashmap = "5.4"
 futures = "0.3"
 futures-util = "0.3"
 hyper = { version = "0.14", features = ["full"] }
-itertools = "0.10"
+itertools = "0.11"
 io-uring = "0.6"
 openssl = { version = "0.10", features = ["vendored"] }
 rand = "0.8"
@@ -35,23 +51,30 @@ sled = "0.34"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = { version = "1.28", features = ["full"] }
-once_cell = "1.17"
-reqwest = { version = "0.11", features = ["blocking"] }
+once_cell = "1.18"
+reqwest = { version = "0.11", features = ["json"] }
 html2md = "0.2"
-regex = "1.7"
+regex = "1.8"
 walkdir = "2.3"
 glob = "0.3"
 csv = "1.2"
 toml = "0.7"
-bitflags = "2.1"
-env_logger = "0.10"
+bitflags = "2.3"
 log = "0.4"
 rayon = "1.7"
+
+# tower
+tower = { version = "0.4", features = ["full"] }
+tower-http = { version = "0.4", features = ["full"] }
 
 # prost
 prost = "0.11"
 prost-derive = "0.11"
 prost-types = "0.11"
+
+# logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"

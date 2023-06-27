@@ -13,6 +13,9 @@ pub mod req;
 mod sede;
 pub mod string;
 
+// photo process crate
+mod thumbor;
+
 mod server {
     use std::io::{Read, Write};
     use std::net::TcpStream;

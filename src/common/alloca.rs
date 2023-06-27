@@ -53,4 +53,11 @@ fn main() {
         std::mem::size_of::<Matrix>()
     );
     drop(data);
+
+    use std::io::Write;
+    let mut buf: Vec<u8> = Vec::new();
+    // dynamic dispatch
+    let writer: &mut dyn Write = &mut buf;
+
+    writer.write_all("hello world".as_bytes()).unwrap();
 }

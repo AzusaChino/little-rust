@@ -82,8 +82,7 @@ mod tests {
     #[test]
     fn log_() {
         // set global log level by using env RUST_LOG
-        std::env::set_var("RUST_LOG", "debug");
-        env_logger::init();
+        tracing_subscriber::fmt::init();
         log::log!(Level::Debug, "env_logger has been initialized");
 
         log::info!("the program has started");
