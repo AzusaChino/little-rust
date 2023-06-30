@@ -304,4 +304,16 @@ mod tests {
         // &[char] 可以通过迭代器转换成 String，String 和 &str 可以直接对比
         assert_eq!(String::from_iter(s2), s3);
     }
+
+    #[test]
+    fn test_slices() {
+        let arr = [1, 2, 3, 4, 5];
+        let vec = vec![1, 2, 3, 4, 5];
+
+        let s1 = &arr[..2];
+        let s2 = &vec[..2];
+
+        // length & content
+        assert_eq!(s1, s2);
+    }
 }

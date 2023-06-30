@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use std::process;
+    use std::{process, rc::Rc};
 
     const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
     const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
@@ -49,5 +49,8 @@ mod tests {
     fn print() {
         println!("{:?} {:?} {:?}", RUSTC_COLOR_ARGS, I_AM_DONE_REGEX, CONTEXT);
         temp_file();
+        let _data = include_bytes!("lib.rs");
+        let rc = Rc::new(1);
+        let _ = rc.clone();
     }
 }
