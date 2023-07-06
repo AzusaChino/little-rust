@@ -1,6 +1,6 @@
 //! 在 Rust 中，凡是需要做资源回收的数据结构，且实现了Deref/DerefMut/Drop，都是智能指针。
+#![allow(unused)]
 
-#[allow(dead_code)]
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
@@ -316,4 +316,123 @@ mod tests {
         // length & content
         assert_eq!(s1, s2);
     }
+
+    use once_cell::sync::Lazy;
+
+    static METRICS: Lazy<Mutex<HashMap<Cow<'static, str>, usize>>> =
+        Lazy::new(|| Mutex::new(HashMap::new()));
+
+    #[test]
+    fn test_arc() {
+        let metrics: Arc<Mutex<HashMap<Cow<'static, str>, usize>>> =
+            Arc::new(Mutex::new(HashMap::new()));
+        for _ in 0..32 {
+            let m = metrics.clone();
+            thread::spawn(move || {
+                let mut g = m.lock().unwrap();
+                // 此时只有拿到 MutexGuard 的线程可以访问 HashMap
+                let data = &mut *g;
+                // Cow 实现了很多数据结构的 From trait，
+                // 所以我们可以用 "hello".into() 生成 Cow
+                let entry = data.entry("hello".into()).or_insert(0);
+                *entry += 1;
+                // MutexGuard 被 Drop，锁被释放
+            });
+        }
+
+        thread::sleep(Duration::from_secs(1));
+
+        println!("metrics: {:?}", metrics.lock().unwrap());
+    }
+
+    pub struct WindowCount<I> {
+        pub(crate) iter: I,
+        count: u32,
+    }
+
+    pub trait IteratorExt: Iterator {
+        fn window_count(self, count: u32) -> WindowCount<Self>
+        where
+            Self: Sized,
+        {
+            WindowCount { iter: self, count }
+        }
+    }
+
+    impl<T: ?Sized> IteratorExt for T where T: Iterator {}
+
+    impl<I> Iterator for WindowCount<I>
+    where
+        I: Iterator,
+    {
+        type Item = Vec<I::Item>;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            let mut v = Vec::new();
+            for _ in 0..self.count {
+                match self.iter.next() {
+                    Some(item) => v.push(item),
+                    None => break,
+                }
+            }
+            if v.is_empty() {
+                None
+            } else {
+                Some(v)
+            }
+        }
+    }
+}
+
+use std::{error::Error, process::Command};
+
+pub type BoxedError = Box<dyn Error + Send + Sync + 'static>;
+
+pub trait Executor {
+    fn run(&self) -> Result<Option<i32>, BoxedError>;
+}
+
+pub struct Shell<'a, 'b> {
+    cmd: &'a str,
+    args: &'b [&'a str],
+}
+
+impl<'a, 'b> Shell<'a, 'b> {
+    pub fn new(cmd: &'a str, args: &'b [&'a str]) -> Self {
+        Self { cmd, args }
+    }
+}
+
+impl<'a, 'b> Executor for Shell<'a, 'b> {
+    fn run(&self) -> Result<Option<i32>, BoxedError> {
+        let output = Command::new(self.cmd).args(self.args).output()?;
+        if output.status.success() {
+            Ok(None)
+        } else {
+            Ok(Some(output.status.code().unwrap_or(1)))
+        }
+    }
+}
+
+pub fn execute_generics(cmd: &impl Executor) -> Result<Option<i32>, BoxedError> {
+    cmd.run()
+}
+
+pub fn execute_trait_object(cmd: &dyn Executor) -> Result<Option<i32>, BoxedError> {
+    cmd.run()
+}
+
+pub fn execute_boxed_trait_object(cmd: Box<dyn Executor>) -> Result<Option<i32>, BoxedError> {
+    cmd.run()
+}
+
+#[test]
+fn test_trait_object() {
+    let cmd = Shell::new("ls", &["-l"]);
+    let r = execute_generics(&cmd);
+    println!("{:?}", r);
+    let r = execute_trait_object(&cmd);
+    println!("{:?}", r);
+    let r = execute_boxed_trait_object(Box::new(cmd));
+    println!("{:?}", r);
 }

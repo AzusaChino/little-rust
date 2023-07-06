@@ -1,3 +1,50 @@
+#![allow(unused)]
+
+use std::{
+    cell::RefCell,
+    fmt,
+    sync::atomic::{AtomicBool, Ordering},
+};
+
+struct Lock<T> {
+    locked: AtomicBool,
+    data: RefCell<T>,
+}
+
+impl<T> fmt::Debug for Lock<T>
+where
+    T: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Lock")
+            .field("locked", &self.locked)
+            .finish()
+    }
+}
+
+unsafe impl<T> Sync for Lock<T> {}
+
+impl<T> Lock<T> {
+    pub fn new(data: T) -> Self {
+        Self {
+            locked: AtomicBool::new(false),
+            data: RefCell::new(data),
+        }
+    }
+    pub fn lock(&self, op: impl FnOnce(&mut T)) {
+        // fail spin
+        while self
+            .locked
+            .compare_exchange(false, true, Ordering::Acquire, Ordering::Relaxed)
+            .is_err()
+        {}
+
+        op(&mut *self.data.borrow_mut());
+
+        self.locked.store(false, Ordering::Release);
+    }
+}
+
 #[cfg(test)]
 mod tests {
 
