@@ -116,6 +116,8 @@ mod tests {
     use anyhow::anyhow;
     use rayon::prelude::{IntoParallelIterator, ParallelIterator};
     use serde_json::{json, Value};
+    use std::pin::Pin;
+    use std::task::{Context, Poll};
     use std::{
         fs,
         thread::{self, JoinHandle},
@@ -266,5 +268,100 @@ mod tests {
         pub fn new(name: impl Into<String>) -> Self {
             Self::Init(name.into())
         }
+    }
+
+    // fn write_hello_file_async(name: &str) -> WriteHelloFile {
+    //     WriteHelloFile::new(name)
+    // }
+
+    // impl Future for WriteHelloFile {
+    //     type Output = Result<()>;
+
+    //     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+    //         let this = self.get_mut();
+    //         loop {
+    //             let next = match this {
+    //                 WriteHelloFile::Init(name) => {
+    //                     let future = File::create("hello.txt");
+    //                     WriteHelloFile::AwaitingCreate(Box::pin(future))
+    //                 }
+    //                 WriteHelloFile::AwaitingCreate(future) => {
+    //                     let file = ready!(future.as_mut().poll(cx))?;
+    //                     let future = file.write_all(format!("hello, {}", name).as_bytes());
+    //                     WriteHelloFile::AwaitingWriteAll(Box::pin(future))
+    //                 }
+    //                 WriteHelloFile::AwaitingWriteAll(future) => {
+    //                     ready!(future.as_mut().poll(cx))?;
+    //                     WriteHelloFile::Done
+    //                 }
+    //                 WriteHelloFile::Done => return Poll::Ready(Ok(())),
+    //             };
+    //             *this = next;
+    //         }
+    //     }
+    // }
+
+    // 自引用 move 产生问题的案例
+    #[derive(Debug)]
+    struct MyStruct {
+        name: String,
+        ptr: *const String,
+    }
+
+    impl MyStruct {
+        pub fn new(name: impl Into<String>) -> Self {
+            let name = name.into();
+            Self {
+                name,
+                ptr: std::ptr::null(),
+            }
+        }
+
+        pub fn init(&mut self) {
+            self.ptr = &self.name as *const String;
+        }
+
+        pub fn print_name(&self) {
+            println!(
+                "struct {:p}: (name: {:p}, ptr: {:p}, name: {}, ref: {})",
+                self,
+                &self.name,
+                self.ptr,
+                self.name,
+                unsafe { &*self.ptr }
+            );
+        }
+    }
+
+    fn move_it(data: MyStruct) -> MyStruct {
+        println!("move_it: {:?}", data);
+        data
+    }
+
+    fn move_creates_issue() -> MyStruct {
+        let mut s = MyStruct::new("hello");
+        s.init();
+        s.print_name();
+
+        let s = move_it(s);
+        // ptr points to previous address, what if it gets droped?
+        s.print_name();
+
+        s
+    }
+
+    fn mem_swap_creates_issue() {
+        let mut s1 = MyStruct::new("hello");
+        s1.init();
+        s1.print_name();
+
+        let mut s2 = MyStruct::new("world");
+        s2.init();
+        s2.print_name();
+
+        std::mem::swap(&mut s1, &mut s2);
+
+        s1.print_name();
+        s2.print_name();
     }
 }
