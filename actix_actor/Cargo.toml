@@ -6,5 +6,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 thiserror = "1"
-actix-web = "4.3"
-tokio = "1.29"
+
+# actix actor
+actix = "0.13"
+actix-rt = "2.7"
