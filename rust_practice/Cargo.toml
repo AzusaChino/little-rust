@@ -21,13 +21,13 @@ anyhow = "1.0"
 thiserror = "1.0"
 
 # web server
-axum = "0.6"
+axum = "0.7"
 
 # image
 image = "0.24"
 
 # utils
-lru = "0.11"
+lru = "0.12"
 percent-encoding = "2"
 
 # photo process
@@ -46,8 +46,8 @@ crossbeam = "0.8"
 dashmap = "5.4"
 futures = "0.3"
 futures-util = "0.3"
-hyper = { version = "0.14", features = ["full"] }
-itertools = "0.11"
+hyper = { version = "1.1", features = ["full"] }
+itertools = "0.12"
 io-uring = "0.6"
 openssl = { version = "0.10", features = ["vendored"] }
 rand = "0.8"
@@ -64,19 +64,19 @@ regex = "1.8"
 walkdir = "2.3"
 glob = "0.3"
 csv = "1.2"
-toml = "0.7"
+toml = "0.8"
 bitflags = "2.3"
 log = "0.4"
 rayon = "1.7"
 
 # tower
 tower = { version = "0.4", features = ["full"] }
-tower-http = { version = "0.4", features = ["full"] }
+tower-http = { version = "0.5", features = ["full"] }
 
 # prost
-prost = "0.11"
-prost-derive = "0.11"
-prost-types = "0.11"
+prost = "0.12"
+prost-derive = "0.12"
+prost-types = "0.12"
 
 # logging
 tracing = "0.1"
@@ -84,7 +84,7 @@ tracing-subscriber = "0.3"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
-nix = "0.26"
+nix = "0.27"
 
 [build-dependencies]
-prost-build = "0.11"
+prost-build = "0.12"

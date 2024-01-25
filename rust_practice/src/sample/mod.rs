@@ -12,6 +12,8 @@ mod mini_tokio;
 mod mini_tokio_old;
 mod mpsc;
 
+mod onebrc;
+
 mod panik;
 mod partial_ord;
 mod reference_tests;
