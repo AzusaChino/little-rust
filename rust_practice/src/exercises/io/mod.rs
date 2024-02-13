@@ -1,6 +1,7 @@
 mod guessing_game;
 mod sleder;
 
+#[cfg(target_os = "linux")]
 #[cfg(test)]
 mod tests {
     use io_uring::{opcode, types, IoUring};

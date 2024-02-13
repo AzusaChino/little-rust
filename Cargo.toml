@@ -1,2 +1,3 @@
 [workspace]
 members = ["actix_actor", "rust_practice"]
+resolver = "1"

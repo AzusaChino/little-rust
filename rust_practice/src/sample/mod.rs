@@ -12,8 +12,6 @@ mod mini_tokio;
 mod mini_tokio_old;
 mod mpsc;
 
-mod onebrc;
-
 mod panik;
 mod partial_ord;
 mod reference_tests;
@@ -26,5 +24,3 @@ mod unsafer;
 mod vector;
 
 pub use future::Delay;
-
-pub use hash_map_usage::process_or_default;
