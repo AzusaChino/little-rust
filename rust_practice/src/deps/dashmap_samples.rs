@@ -15,7 +15,5 @@ mod tests {
 
         dm_with_hasher.insert(2, 3);
         dm_with_hasher.insert(3, 4);
-
-
     }
 }

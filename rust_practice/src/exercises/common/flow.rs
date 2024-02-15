@@ -1,5 +1,6 @@
 #[cfg(test)]
 mod tests {
+    use std::sync::{Arc, Mutex};
 
     fn fib1(n: u8) {
         let (mut a, mut b, mut i) = (1, 1, 2);
@@ -91,5 +92,43 @@ mod tests {
         fib1(10);
         fib2(10);
         fib3(10);
+    }
+
+    #[test]
+    fn panic() {
+        use std::thread;
+
+        const COUNT: u32 = 100000;
+
+        let global = Arc::new(Mutex::new(0));
+
+        let clone1 = global.clone();
+        let th1 = thread::spawn(move || {
+            for _ in 0..COUNT {
+                match clone1.lock() {
+                    Ok(mut value) => *value += 1,
+                    Err(poisoned) => {
+                        let mut value = poisoned.into_inner();
+                        *value += 1;
+                    }
+                }
+            }
+        });
+
+        let clone2 = global.clone();
+        let th2 = thread::spawn(move || {
+            for _ in 0..COUNT {
+                let mut value = clone2.lock().unwrap();
+                *value -= 1;
+                if *value < 100000 {
+                    println!("make a panic");
+                    panic!("oops")
+                }
+            }
+        });
+
+        th1.join().ok();
+        th2.join().ok();
+        println!("final value: {:?}", global);
     }
 }

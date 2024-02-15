@@ -117,3 +117,11 @@ fn if_constitute() {
 
     println!("{}", count);
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test1() {
+        println!("{}{}", file!(), line!());
+    }
+}
