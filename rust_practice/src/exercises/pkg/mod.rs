@@ -4,6 +4,7 @@ pub mod obj;
 mod pattern;
 mod unsafety;
 
+#[cfg(target_os="linux")]
 #[cfg(test)]
 mod rsa {
     use anyhow::Result;

@@ -117,3 +117,25 @@ impl<T> Index<usize> for List<T> {
         &self.0.iter().nth(index).unwrap()
     }
 }
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn foo() {
+        let mut data = vec!['a', 'b', 'c', 'd'];
+        // Non Lexical Lifetime
+        let slice = &mut data[..];
+        capitalize(slice);
+
+        data.push('e');
+
+        println!("{:?}", data);
+    }
+
+    fn capitalize(data: &mut [char]) {
+        for c in data {
+            c.make_ascii_uppercase()
+        }
+    }
+}
