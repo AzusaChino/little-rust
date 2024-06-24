@@ -3,6 +3,7 @@ mod demo;
 mod deps;
 mod exercise;
 mod exercises;
+mod library;
 mod files;
 mod mem;
 mod sample;

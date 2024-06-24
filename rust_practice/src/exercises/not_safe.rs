@@ -12,12 +12,12 @@ mod tests {
     #[test]
     fn test_unsafe() {
         let x = 1_i32;
-        let mut y: u32 = 1;
+        let y: u32 = 1;
 
-        let raw_mut = &mut y as *mut u32 as *mut i32 as *mut i64;
-        unsafe {
-            *raw_mut = -1;
-        }
+        // let raw_mut = &mut y as *mut u32 as *mut i32 as *mut i64;
+        // unsafe {
+        //     *raw_mut = -1;
+        // }
 
         println!("{:X}, {:X}", x, y);
 
