@@ -8,7 +8,7 @@ pub async fn read_file(name: impl AsRef<Path>) -> anyhow::Result<()> {
     // Read some data, the buffer is passed by ownership and submitted
     // to the kernel. When the operation completes, we get the buffer
     // back.
-    let (result, buf_from_kernel) = file.read_at(buf_move, 0).await;
+    let (result, buf_from_kernel) = file.read_at(buf_mv, 0).await;
     let bytes_read = result?;
 
     println!(
