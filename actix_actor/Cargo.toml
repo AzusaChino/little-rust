@@ -9,4 +9,4 @@ thiserror = "1"
 
 # actix actor
 actix = "0.13"
-actix-rt = "2.9"
+actix-rt = "2.10"

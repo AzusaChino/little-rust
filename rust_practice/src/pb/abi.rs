@@ -6,7 +6,7 @@ pub struct ImageSpec {
     pub specs: ::prost::alloc::vec::Vec<Spec>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Resize {
     #[prost(uint32, tag = "1")]
     pub width: u32,
@@ -105,7 +105,7 @@ pub mod resize {
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Crop {
     #[prost(uint32, tag = "1")]
     pub x1: u32,
@@ -117,19 +117,19 @@ pub struct Crop {
     pub y2: u32,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Fliph {}
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Flipv {}
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Contrast {
     #[prost(float, tag = "1")]
     pub contrast: f32,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Filter {
     #[prost(enumeration = "filter::Filter", tag = "1")]
     pub filter: i32,
@@ -180,7 +180,7 @@ pub mod filter {
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Watermark {
     #[prost(uint32, tag = "1")]
     pub x: u32,
@@ -188,7 +188,7 @@ pub struct Watermark {
     pub y: u32,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct Spec {
     #[prost(oneof = "spec::Data", tags = "1, 2, 3, 4, 5, 6, 7")]
     pub data: ::core::option::Option<spec::Data>,
@@ -196,7 +196,7 @@ pub struct Spec {
 /// Nested message and enum types in `Spec`.
 pub mod spec {
     #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, Copy, PartialEq, ::prost::Oneof)]
     pub enum Data {
         #[prost(message, tag = "1")]
         Resize(super::Resize),

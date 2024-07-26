@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 trait Stringer {
     fn to_string(&self) -> String;
 }
