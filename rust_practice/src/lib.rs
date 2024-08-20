@@ -1,3 +1,7 @@
+// extern third party library
+extern crate crossbeam_channel;
+extern crate rayon;
+
 mod common;
 mod demo;
 mod deps;
