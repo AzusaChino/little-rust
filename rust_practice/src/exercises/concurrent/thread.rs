@@ -1,4 +1,4 @@
-#![allow(unused)]
+#![allow(dead_code)]
 // How to create threads to run multiple pieces of code at the same time
 // Message-passing concurrency, where channels send messages between threads
 // Shared-state concurrency, where multiple threads have access to some piece of data
@@ -7,6 +7,11 @@
 // std::marker
 // The Send marker trait indicates that ownership of values of the type implementing Send can be transferred between threads.
 // The Sync marker trait indicates that it is safe for the type implementing Sync to be referenced from multiple threads.
+
+use std::sync::{
+    atomic::{AtomicBool, AtomicUsize, Ordering},
+    Arc,
+};
 
 mod thd {
     // Race conditions, Deadlocks, Bugs
@@ -231,5 +236,52 @@ mod ssc {
         fn test_sm() {
             sm();
         }
+    }
+}
+
+struct LightLock(AtomicBool);
+
+struct LightGuard<'a> {
+    lock: &'a LightLock,
+}
+
+impl LightLock {
+    pub fn new() -> Self {
+        LightLock(AtomicBool::new(false))
+    }
+
+    pub fn try_lock(&self) -> Option<LightGuard> {
+        let locked = self.0.swap(true, Ordering::Acquire);
+        if locked {
+            None
+        } else {
+            Some(LightGuard { lock: self })
+        }
+    }
+}
+
+impl<'a> Drop for LightGuard<'a> {
+    fn drop(&mut self) {
+        self.lock.0.store(false, Ordering::Release);
+    }
+}
+
+struct SpinLock(Arc<AtomicUsize>);
+
+impl SpinLock {
+    pub fn new() -> Self {
+        SpinLock(Arc::new(AtomicUsize::new(1)))
+    }
+
+    pub fn lock(&self) {
+        self.0.store(1, Ordering::SeqCst);
+    }
+
+    pub fn unlock(&self) {
+        self.0.store(0, Ordering::SeqCst);
+    }
+
+    pub fn is_locked(&self) -> bool {
+        return self.0.load(Ordering::SeqCst) == 1usize;
     }
 }

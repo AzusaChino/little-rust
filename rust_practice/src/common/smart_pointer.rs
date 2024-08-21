@@ -1,5 +1,5 @@
 //! 在 Rust 中，凡是需要做资源回收的数据结构，且实现了Deref/DerefMut/Drop，都是智能指针。
-#![allow(unused)]
+#![allow(dead_code)]
 
 #[cfg(test)]
 mod tests {
@@ -23,8 +23,9 @@ mod tests {
     #[test]
     fn boxi() {
         let mut boxed_obj = Box::<UserSample>::default();
+        // auto deref mut
         boxed_obj.username = String::from("username");
-        boxed_obj.password = "password".to_string();
+        boxed_obj.password = "password".to_owned();
         drop(boxed_obj)
     }
 

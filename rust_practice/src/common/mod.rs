@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 mod alloca;
 mod atomic_action;
 // channel practice

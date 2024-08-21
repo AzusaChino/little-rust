@@ -1,6 +1,6 @@
-//! 注意这里不能使用 println!() 。因为 stdout 会打印到一个由 Mutex 互斥锁保护的共享全
-//! 局 buffer 中，这个过程中会涉及内存的分配，分配的内存又会触发 println!()，最终造成
-//! 程序崩溃。而 eprintln! 直接打印到 stderr，不会 buffer。
+//! 注意这里不能使用 println!() 。因为 stdout 会打印到一个由 Mutex 互斥锁保护的共享全局 buffer 中，
+//! 这个过程中会涉及内存的分配，分配的内存又会触发 println!()，
+//! 最终造成程序崩溃。而 eprintln! 直接打印到 stderr，不会操作 buffer。
 
 use std::{
     alloc::{GlobalAlloc, System},
