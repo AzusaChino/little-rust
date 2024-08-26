@@ -13,3 +13,4 @@ Cargo.lock
 **/target/
 .idea/
 .vs/
+db/
